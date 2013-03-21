@@ -1,0 +1,63 @@
+{% extends "judgementapp/base.html" %}
+
+{% block content %}
+
+	<div class="well">
+        <h2>{{ query.qId }} - {{ query.text }}</h2>
+	    <p></p>
+    </div>
+
+    <div class="row">
+        <div class="span12">
+            <h3>Document - {{ document.docId }}</h3>
+        </div>
+    </div>
+	<div class="row">
+        
+        <div class="span12">	
+            <pre>
+            <iframe id='profile' style='border-width: 0;', width="100%", height="700", srcdoc="<html>{{ content }}</html>"></iframe>
+        </pre>
+            <!-- <pre>{{ content }}</pre> -->
+        </div>
+  </div>
+  <div class="row">
+        <div class="span12">
+            <form class="form-inline" action="judge/" method="post">
+                {% csrf_token %}
+                <legend>Judgement</legend>
+                <div class="control-group">
+                   <label class="radio">
+                      <input type="radio" name="relevance" id="relevance2" value="2" {% if judgement.relevance == 2 %} checked {% endif %}>
+                      Highly relevant
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="relevance" id="relevance1" value="1" {% if judgement.relevance == 1 %} checked {% endif %}>
+                      Somewhat relevant
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="relevance" id="relevance0" value="0" {% if judgement.relevance == 0 %} checked {% endif %}>
+                      Not relevant
+                    </label>
+                </div>
+                 <div class="control-group">
+                    <div class="controls">
+                      <textarea rows="10" class="span9", placehoder="comment" name="comment"  onfocus="if (this.value=='Comments') this.value = ''">{% if judgement.comment %}{{ judgement.comment }}{% else %}Comments{% endif %}</textarea>
+                    </div>
+                  </div>
+                
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" size="20">Save</button> <a href="/query/{{ query.qId }}/" class="btn">Cancel</a>
+                </div>
+
+            </form>
+
+
+
+        </div>
+        
+    </div>
+
+
+{% endblock %}

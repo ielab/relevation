@@ -1,0 +1,75 @@
+{% extends "judgementapp/base.html" %}
+
+{% block content %}
+
+	<div class="well">
+        <h2>Setup</h2>
+  </div>
+
+	<div class="row">
+
+    {% if queries %}
+      <div class="span12">
+        {{ queries }} queries processed succesfully.
+      </div>
+    {% endif %}
+    {% if results %}
+      <div class="span12">
+        {{ results }} document results processed succesfully.
+      </div>
+    {% endif %}
+    {% if not queries and not results %}
+
+      <div class="span12">
+        <!--<p>Location of the directory contain all the documents. Document file name must match those in results file.</p>-->
+        <p>Query file in the format "QueryId [tab] QueryText". Results file using standard TREC format results file</p>
+      </div>
+
+      <form class="form-horizontal" action="save" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="control-group">
+            <label class="control-label" for="queryfile">Queries</label>
+            <div class="controls">
+              <input id="queryfile" type="file" style="display:none", name="queryFile">
+              <div class="input-append">
+                 <input id="photoCoverQuery" class="input-large" type="text">
+                 <a class="btn" onclick="$('input[id=queryfile]').click();">Browse</a>
+
+                  <script type="text/javascript">
+                  $('input[id=queryfile]').change(function() {
+                     $('#photoCoverQuery').val($(this).val());
+                  });
+                  </script>
+              </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="resultsfile">Results List</label>
+            <div class="controls">
+              <input id="resultsfile" type="file" style="display:none", name="resultsFile">
+              <div class="input-append">
+                 <input id="photoCoverResults" class="input-large" type="text">
+                 <a class="btn" onclick="$('input[id=resultsfile]').click();">Browse</a>
+
+                  <script type="text/javascript">
+                  $('input[id=resultsfile]').change(function() {
+                     $('#photoCoverResults').val($(this).val());
+                  });
+                  </script>
+              </div>
+          
+            </div>
+          </div>
+
+       <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn">Cancel</button>
+      </div>
+
+      </form>
+    {% endif %}
+  </div>
+
+
+{% endblock %}

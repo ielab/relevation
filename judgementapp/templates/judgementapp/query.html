@@ -1,0 +1,69 @@
+{% extends "judgementapp/base.html" %}
+
+{% block content %}
+
+	<div class="well">
+        <h2>{{ query.qId }} - {{ query.text }}</h2>
+	    <p></p>
+    </div>
+
+	<div class="row">
+
+        <div class="span12">
+        	<table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Query</th>
+                  <th>Document#</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for judgement in judgements %}
+                  <tr>
+                    <td>{{ query.qId }}</td>
+                    <td><a href="doc/{{ judgement.document }}">{{ judgement.document }}</a></td>
+                    <td {% if judgement.relevance == -1 %} style="color: red" {% endif %}>{{ judgement.label }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+        </div>
+
+
+           <form class="form-inline" action="" method="post">
+              {% csrf_token %}
+              <legend>How hard was this query?</legend>
+              <div class="control-group">
+                 <label class="radio inline">
+                    <input type="radio" name="difficulty" id="difficulty2" value="2" {% if query.difficulty == 2 %} checked {% endif %}>
+                    Very difficult
+                  </label>
+                  <label class="radio inline">
+                    <input type="radio" name="difficulty" id="difficulty1" value="1" {% if query.difficulty == 1 %} checked {% endif %}>
+                    Moderately difficult
+                  </label>
+                  <label class="radio inline">
+                    <input type="radio" name="difficulty" id="difficulty0" value="0" {% if query.difficulty == 0 %} checked {% endif %}>
+                    Easy
+                  </label>
+              </div>
+               <div class="control-group">
+                  <div class="controls">
+                    <textarea rows="3" placehoder="comment" name="comment" class="span6" onfocus="if (this.value=='Comments') this.value = ''">{% if query.comment %}{{ query.comment }}{% else %}Comments{% endif %}</textarea>
+                  </div>
+                </div>
+              
+
+              <div class="form-actions">
+                  <button type="submit" class="btn btn-primary" size="20">Save Judgement</button> <a href="/query/{{ query.qId }}/" class="btn">Cancel</a>
+              </div>
+
+            </form>
+
+        
+    </div>
+
+
+{% endblock %}

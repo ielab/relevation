@@ -1,0 +1,43 @@
+{% extends "judgementapp/base.html" %}
+
+{% block content %}
+
+	<div class="well">
+        <h2>Queries</h2>
+	    <p></p>
+    </div>
+
+	<div class="row">
+
+        <div class="span12">
+        	<table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>QueryId</th>
+                  <th>Text</th>
+                  <th>Number of documents</th>
+                  <th>Number unjudged</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for query in queries %}
+                  
+                <tr>
+                    <td>{{ query.qId }} </td>
+                    <td><a href="query/{{ query.qId }}">{{ query.text }}</a></td>
+                    <td>{{ query.num_judgements }}</td>
+                    <td>{{ query.num_unjudged_docs }}</td>
+                  </tr>
+                {% endfor %}
+                
+        
+              </tbody>
+            </table>
+
+        </div>
+        
+    </div>
+
+
+{% endblock %}

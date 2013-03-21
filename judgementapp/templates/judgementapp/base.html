@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load bootstrap_toolkit %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>relevation - Information Retrieval Relevance Judging System</title>
+    <meta name="description" content="">
+    <meta name="author" content="Bevan Koopman">
+    {% bootstrap_stylesheet_tag %}
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+        }
+    </style>
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    {% bootstrap_javascript_tag %}
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">relevation</a>
+            <ul class="nav">
+                <li><a href="/" class="">Home</a></li>
+                <li><a href="/upload">Setup</a></li>
+                <li class="dropdown">
+                    
+                    <ul class="dropdown-menu">
+                        <li><a class="nav" href="?layout=vertical">Vertical</a></li>
+                        <li><a href="?layout=horizontal">Horizontal</a></li>
+                        <li><a href="?layout=inline">Inline</a></li>
+                        <li><a href="?layout=search">Search</a></li>
+                        <li><a href="?layout=horizontal">Using template</a></li>
+                    </ul>
+                </li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/query">Queries</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    {% bootstrap_messages %}
+
+    {% block content %}Empty page{% endblock %}
+
+    <p><hr></p>
+
+    <footer class="row">
+        <div class="span6">
+            <p>relevation - Information Retrieval Relevance Judging System</p>
+        </div>
+        <div class="span6" style="text-align:right">
+            <p>
+                <a href="http://koopman.id.au">Bevan Koopman</a>
+            </p>
+        </div>
+    </footer>
+
+</div> <!-- container -->
+
+</body>
+</html>
