@@ -2,31 +2,74 @@
 
 {% block content %}
 
-	<div class="well">
-        <h2>{{ query.qId }} - {{ query.text }}</h2>
-	    <p></p>
+    
+    
+
+
+	   <div class="well">
+
+        <h2>{{ query.qId }} - {{ query.text }} <a style="text-align: right;", href="{% url 'judgementapp.views.query' qId=query.qId %}" class="btn">Back to Query</a></h2>
+        
     </div>
 
     <div class="row">
-        <div class="span12">
-            <h3>Document - {{ document.docId }}</h3>
-        </div>
+      
+      <div class="span3">
+      {% if prev %}
+        <a href="{% url 'judgementapp.views.document' qId=query.qId docId=prev.document.docId %}" class="btn">Prev Document</a>
+      {% endif %}
+      </div>
+
+      <div class="span6"><h3 style="text-align: center;">Document #{{ document.id }} - {{ document.docId }}</h3></div>
+
+      <div class="span3" align="right">
+      {% if next %}
+      <a href="{% url 'judgementapp.views.document' qId=query.qId docId=next.document.docId %}" class="btn">Next Document</a>
+      {% endif %}
+      </div>
+
     </div>
+
+
 	<div class="row">
         
-        <div class="span12">	
-            <pre>
-            <iframe id='profile' style='border-width: 0;', width="100%", height="700", srcdoc="<html>{{ content }}</html>"></iframe>
-        </pre>
-            <!-- <pre>{{ content }}</pre> -->
+        <div class="span9", style="height:750px; position:relative; overflow-y: scroll;" id='content'>
+          <pre>{{ content }}</pre>
         </div>
-  </div>
-  <div class="row">
-        <div class="span12">
-            <form class="form-inline" action="judge/" method="post">
+      
+        
+        <script>
+          // $('div#content').mouseup(function() {
+          //     document.getElementById("comment").value = getSelectedText();
+          // });
+
+          function getSelectedText() {
+              if (window.getSelection) {
+                  return window.getSelection().toString();
+              } else if (document.selection) {
+                  return document.selection.createRange().text;
+              }
+              return '';
+          }
+
+          function captureSelection() {
+            textarea = document.getElementById('comment');
+            if (textarea.value=='Comments') {
+              textarea.value = '';
+            }
+            if (textarea.value.length > 0) {
+              textarea.value = textarea.value + '\n';
+            }
+            textarea.value = textarea.value + '"' + getSelectedText() + '"';
+          }
+    </script>
+
+        <div class="span3">
+            <form class="form-inline" action="{% url 'judgementapp.views.judge' qId=query.qId docId=document.docId %}" method="post">
                 {% csrf_token %}
                 <legend>Judgement</legend>
                 <div class="control-group">
+
                    <label class="radio">
                       <input type="radio" name="relevance" id="relevance2" value="2" {% if judgement.relevance == 2 %} checked {% endif %}>
                       Highly relevant
@@ -42,20 +85,24 @@
                 </div>
                  <div class="control-group">
                     <div class="controls">
-                      <textarea rows="10" class="span9", placehoder="comment" name="comment"  onfocus="if (this.value=='Comments') this.value = ''">{% if judgement.comment %}{{ judgement.comment }}{% else %}Comments{% endif %}</textarea>
+                      <textarea rows="10" class="span3", id="comment" name="comment"  onfocus="if (this.value=='Comments') this.value = ''">{% if judgement.comment %}{{ judgement.comment }}{% else %}Comments{% endif %}</textarea>
+                      <button type="button" class="btn btn-link" id="capture" onclick="captureSelection()">Insert Selected Text</button>
                     </div>
                   </div>
                 
 
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" size="20">Save</button> <a href="/query/{{ query.qId }}/" class="btn">Cancel</a>
+
+                    <button type="submit" class="btn btn-primary" size="20">Save</button> {% if next %} <button type="submit" name="next", class="btn btn-primary" size="20">Save & Next</button> {% endif %}
+                    
                 </div>
 
             </form>
 
 
 
-        </div>
+  </div>
+  
         
     </div>
 

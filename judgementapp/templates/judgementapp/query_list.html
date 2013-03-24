@@ -25,9 +25,9 @@
                   
                 <tr>
                     <td>{{ query.qId }} </td>
-                    <td><a href="query/{{ query.qId }}">{{ query.text }}</a></td>
+                    <td><a href="{% url 'judgementapp.views.query' qId=query.qId%}">{{ query.text }}</a></td>
                     <td>{{ query.num_judgements }}</td>
-                    <td>{{ query.num_unjudged_docs }}</td>
+                    <td {% if query.num_unjudged_docs > 0 %} style="color: red" {% endif %}>{{ query.num_unjudged_docs }}</td>
                   </tr>
                 {% endfor %}
                 

@@ -2,6 +2,9 @@ from django.conf.urls import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+
+from relevation import settings
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -15,5 +18,5 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^', include('judgementapp.urls')),
+    url(r'^%s/' % settings.URL_PREFIX, include('judgementapp.urls')),
 )

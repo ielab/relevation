@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
@@ -9,6 +10,15 @@ class Document(models.Model):
 
 	def __unicode__(self):
 		return self.docId
+
+	def get_content(self):
+		content = ""
+		try:
+			with open(settings.DATA_DIR+"/"+self.docId) as f:
+				content = f.read()
+		except Exception:
+			content = "Could not read file %s" % settings.DATA_DIR+"/"+self.docId
+		return content
 
 class Query(models.Model):
 	qId = models.IntegerField()
@@ -44,7 +54,7 @@ class Judgement(models.Model):
 	relevance = models.IntegerField()
 
 	def __unicode__(self):
-		return '(%s, %s) = %d' % (self.query.qId, self.document.docId, self.relevance)
+		return '(%s, %s) = %s' % (self.query.qId, self.document.docId, self.relevance)
 
 	def label(self):
 		return self.labels[self.relevance]

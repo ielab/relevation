@@ -15,14 +15,14 @@
 
             <p>Setup a new relevance judging project by upload your queries and ranked list of document results.</p>
 
-            <p><a class="btn" href="upload">Start setup &raquo;</a></p>
+            <p><a class="btn" href="{% url 'judgementapp.views.index' %}upload">Start setup &raquo;</a></p>
         </div>
         <div class="span6">
             <h2>Queries</h2>
 
             <p>Take a look at the current queries in the systems and begin judging.</p>
 
-            <p><a class="btn" href="query">View queries &raquo;</a></p>
+            <p><a class="btn" href="{% url 'judgementapp.views.query_list' %}">View queries &raquo;</a></p>
         </div>
     </div>
 

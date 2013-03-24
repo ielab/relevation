@@ -25,12 +25,11 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <a class="brand" href="/">relevation</a>
+            <a class="brand" href="{% url 'judgementapp.views.index' %}">relevation</a>
             <ul class="nav">
-                <li><a href="/" class="">Home</a></li>
-                <li><a href="/upload">Setup</a></li>
+                <li><a href="{% url 'judgementapp.views.index' %}" class="">Home</a></li>
+                <li><a href="{% url 'judgementapp.views.index' %}upload">Setup</a></li>
                 <li class="dropdown">
-                    
                     <ul class="dropdown-menu">
                         <li><a class="nav" href="?layout=vertical">Vertical</a></li>
                         <li><a href="?layout=horizontal">Horizontal</a></li>
@@ -39,8 +38,8 @@
                         <li><a href="?layout=horizontal">Using template</a></li>
                     </ul>
                 </li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/query">Queries</a></li>
+                <li><a href="{% url 'judgementapp.views.index' %}about">About</a></li>
+                <li><a href="{% url 'judgementapp.views.query_list' %}">Queries</a></li>
             </ul>
         </div>
     </div>

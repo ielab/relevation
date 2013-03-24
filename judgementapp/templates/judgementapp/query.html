@@ -14,6 +14,7 @@
               <thead>
                 <tr>
                   <th>Query</th>
+                  <th>Number</th>
                   <th>Document#</th>
                   <th>Status</th>
                 </tr>
@@ -22,8 +23,14 @@
                 {% for judgement in judgements %}
                   <tr>
                     <td>{{ query.qId }}</td>
-                    <td><a href="doc/{{ judgement.document }}">{{ judgement.document }}</a></td>
-                    <td {% if judgement.relevance == -1 %} style="color: red" {% endif %}>{{ judgement.label }}</td>
+                    <td>{{ judgement.document.id }}</td>
+                    <td><a href="{% url 'judgementapp.views.document' qId=query.qId docId=judgement.document.docId %}">{{ judgement.document }}</a></td>
+                    <td style="color: 
+                      {% if judgement.relevance == -1 %} black {% endif %}
+                      {% if judgement.relevance == 0 %} red {% endif %}
+                      {% if judgement.relevance == 1 %} orange {% endif %}
+                      {% if judgement.relevance == 2 %} green {% endif %}
+                    " >{{ judgement.label }}</td>
                   </tr>
                 {% endfor %}
               </tbody>
@@ -57,7 +64,7 @@
               
 
               <div class="form-actions">
-                  <button type="submit" class="btn btn-primary" size="20">Save Judgement</button> <a href="/query/{{ query.qId }}/" class="btn">Cancel</a>
+                  <button type="submit" class="btn btn-primary" size="20">Save</button> <a href="{% url 'judgementapp.views.query' qId=query.qId %}" class="btn">Cancel</a>
               </div>
 
             </form>

@@ -5,7 +5,8 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-DATA_DIR="/export/data/ir.collections/medtrack/visits/term_representation-clean"
+# DATA_DIR=os.getcwd()+'/documents'
+URL_PREFIX=''
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -16,7 +17,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.environ['HOME']+'/phd/projects/relevation/db/relevation.db',                      # Or path to database file if using sqlite3.
+        'NAME': os.getcwd()+'/db/relevation.db',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -167,3 +168,9 @@ BOOTSTRAP_CSS_URL       = BOOTSTRAP_CSS_BASE_URL + 'bootstrap.css'
 BOOTSTRAP_JS_BASE_URL   = BOOTSTRAP_BASE_URL + 'js/'
 # Enable for single bootstrap.js file
 #BOOTSTRAP_JS_URL        = BOOTSTRAP_JS_BASE_URL + 'bootstrap.js'
+
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
