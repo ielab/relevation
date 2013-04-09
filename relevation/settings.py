@@ -5,7 +5,7 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-# DATA_DIR=os.getcwd()+'/documents'
+DATA_DIR=os.getcwd()+'/documents'
 URL_PREFIX=''
 
 ADMINS = (
@@ -162,7 +162,7 @@ LOGGING = {
     }
 }
 
-BOOTSTRAP_BASE_URL      = 'http://twitter.github.com/bootstrap/assets/'
+BOOTSTRAP_BASE_URL      = 'http://twitter.github.io/bootstrap/assets/'
 BOOTSTRAP_CSS_BASE_URL  = BOOTSTRAP_BASE_URL + 'css/'
 BOOTSTRAP_CSS_URL       = BOOTSTRAP_CSS_BASE_URL + 'bootstrap.css'
 BOOTSTRAP_JS_BASE_URL   = BOOTSTRAP_BASE_URL + 'js/'

@@ -21,13 +21,14 @@
     {% if not queries and not results %}
 
       <div class="span12">
-        <!--<p>Location of the directory contain all the documents. Document file name must match those in results file.</p>-->
-        <p>Query file in the format "QueryId [tab] QueryText". Results file using standard TREC format results file</p>
-      </div>
+        
+
+
 
       <form class="form-horizontal" action="save" method="post" enctype="multipart/form-data">
           {% csrf_token %}
-
+          <legend>Upload Queries and Results List</legend>
+          <p>Query file in the format "QueryId [tab] QueryText". Results file using standard TREC format results file</p>
           <div class="control-group">
             <label class="control-label" for="queryfile">Queries</label>
             <div class="controls">
@@ -68,6 +69,8 @@
       </div>
 
       </form>
+      
+      </div>
     {% endif %}
   </div>
 

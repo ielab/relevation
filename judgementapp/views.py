@@ -20,11 +20,6 @@ def index(request):
 def query_list(request):
     queries = Query.objects.order_by('qId')
 
-    template = loader.get_template('judgementapp/query_list.html')
-    context = Context({
-        'queries': queries,
-    })
-
     return render_to_response('judgementapp/query_list.html', { 'queries': queries}, context_instance=RequestContext(request))
 
 def query(request, qId):
@@ -44,7 +39,15 @@ def query(request, qId):
 def document(request, qId, docId):
     document = Document.objects.get(docId=docId)
     query = Query.objects.get(qId=qId)
+
+    judgements = Judgement.objects.filter(query=query.id)
     judgement = Judgement.objects.filter(query=query.id, document=document.id)[0]
+    rank = -1
+    for (count, j) in enumerate(judgements):
+        if j.id == judgement.id:
+            rank = count+1
+            break
+
 
     prev = None
     try:
@@ -61,7 +64,7 @@ def document(request, qId, docId):
     content = document.get_content()
 
     return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement, 
-        'next': next, 'prev': prev, 'content': content.strip()}, context_instance=RequestContext(request))
+        'next': next, 'prev': prev, 'rank': rank, 'total_rank': judgements.count(), 'content': content.strip()}, context_instance=RequestContext(request))
 
 def judge(request, qId, docId):
     query = get_object_or_404(Query, qId=qId)
@@ -69,6 +72,7 @@ def judge(request, qId, docId):
     relevance = request.POST['relevance']
     comment = request.POST['comment']
 
+    judgements = Judgement.objects.filter(query=query.id)
     judgement, created = Judgement.objects.get_or_create(query=query.id, document=document.id)
     judgement.relevance = int(relevance)
     if comment != 'Comment':
@@ -76,7 +80,6 @@ def judge(request, qId, docId):
     judgement.save()
 
     
-
 
     next = None
     try:
@@ -94,10 +97,18 @@ def judge(request, qId, docId):
     except:
         pass
 
+    rank = -1
+    for (count, j) in enumerate(judgements):
+        if j.id == judgement.id:
+            rank = count+1
+            break
+
+
     content = document.get_content()
 
-    return render_to_response('judgementapp/document.html', {'query':query, 'document': document, 'judgement': judgement, 
-        'next': next, 'prev': prev, 'content': content.strip()}, RequestContext(request))
+    return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement, 
+        'next': next, 'prev': prev, 'rank': rank, 'total_rank': judgements.count(), 'content': content.strip()}, context_instance=RequestContext(request))
+
 
 def upload(request):
     context = {}
@@ -119,7 +130,7 @@ def upload(request):
         for result in f:
             qid, z, doc, rank, score, desc = result.split()
             docCount = docCount + 1
-
+            doc = doc.replace('corpus/', '')
             
             document, created = Document.objects.get_or_create(docId=doc)
             document.text = "TBA"

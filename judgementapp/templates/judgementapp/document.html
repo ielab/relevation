@@ -20,11 +20,11 @@
       {% endif %}
       </div>
 
-      <div class="span6"><h3 style="text-align: center;">Document #{{ document.id }} - {{ document.docId }}</h3></div>
+      <div class="span6"><h3 style="text-align: center;">Document "{{ document.docId }}" ({{ rank }} / {{total_rank}}) </h3></div>
 
       <div class="span3" align="right">
       {% if next %}
-      <a href="{% url 'judgementapp.views.document' qId=query.qId docId=next.document.docId %}" class="btn">Next Document</a>
+        <a href="{% url 'judgementapp.views.document' qId=query.qId docId=next.document.docId %}" class="btn">Next Document</a>
       {% endif %}
       </div>
 
@@ -67,25 +67,35 @@
         <div class="span3">
             <form class="form-inline" action="{% url 'judgementapp.views.judge' qId=query.qId docId=document.docId %}" method="post">
                 {% csrf_token %}
+
+                {% if query.criteria %}
+                  <legend>Query Description</legend>
+                  Criteria: {{ query.criteria }}
+                {% endif %}
+
                 <legend>Judgement</legend>
                 <div class="control-group">
-
-                   <label class="radio">
-                      <input type="radio" name="relevance" id="relevance2" value="2" {% if judgement.relevance == 2 %} checked {% endif %}>
+                    <label class="radio">
+                      <input type="radio" name="relevance" id="relevance1" value="-1" {% if judgement.relevance == -1 %} checked {% endif %}>
+                      Unjudged
+                    </label><br>
+                    <label class="radio">
+                     <input type="radio" name="relevance" id="relevance2" value="2" {% if judgement.relevance == 2 %} checked {% endif %}>
                       Highly relevant
-                    </label>
+                    </label><br>
                     <label class="radio">
                       <input type="radio" name="relevance" id="relevance1" value="1" {% if judgement.relevance == 1 %} checked {% endif %}>
                       Somewhat relevant
-                    </label>
+                    </label><br>
                     <label class="radio">
                       <input type="radio" name="relevance" id="relevance0" value="0" {% if judgement.relevance == 0 %} checked {% endif %}>
                       Not relevant
                     </label>
                 </div>
                  <div class="control-group">
+                    <label>Comment:</label>
                     <div class="controls">
-                      <textarea rows="10" class="span3", id="comment" name="comment"  onfocus="if (this.value=='Comments') this.value = ''">{% if judgement.comment %}{{ judgement.comment }}{% else %}Comments{% endif %}</textarea>
+                      <textarea rows="10" class="span3", id="comment" name="comment">{% if judgement.comment %}{{ judgement.comment }}{% else %}{% endif %}</textarea>
                       <button type="button" class="btn btn-link" id="capture" onclick="captureSelection()">Insert Selected Text</button>
                     </div>
                   </div>

@@ -8,7 +8,7 @@ from django import template
 from django.conf import settings
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
-    'http://twitter.github.com/bootstrap/assets/'
+    'http://twitter.github.io/bootstrap/assets/'
 )
 
 BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',

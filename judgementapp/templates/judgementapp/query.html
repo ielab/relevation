@@ -3,7 +3,7 @@
 {% block content %}
 
 	<div class="well">
-        <h2>{{ query.qId }} - {{ query.text }}</h2>
+        <h2>{{ query.qId }} - {{ query.text }} <a style="text-align: right;", href="{% url 'judgementapp.views.query_list' %}" class="btn">Back to Queries</a></h2>
 	    <p></p>
     </div>
 
@@ -23,7 +23,7 @@
                 {% for judgement in judgements %}
                   <tr>
                     <td>{{ query.qId }}</td>
-                    <td>{{ judgement.document.id }}</td>
+                    <td>{{ forloop.counter }}</td>
                     <td><a href="{% url 'judgementapp.views.document' qId=query.qId docId=judgement.document.docId %}">{{ judgement.document }}</a></td>
                     <td style="color: 
                       {% if judgement.relevance == -1 %} black {% endif %}
@@ -38,10 +38,9 @@
 
         </div>
 
-
            <form class="form-inline" action="" method="post">
               {% csrf_token %}
-              <legend>How hard was this query?</legend>
+              <legend>How hard was this query to judge?</legend>
               <div class="control-group">
                  <label class="radio inline">
                     <input type="radio" name="difficulty" id="difficulty2" value="2" {% if query.difficulty == 2 %} checked {% endif %}>
@@ -56,9 +55,10 @@
                     Easy
                   </label>
               </div>
+              <label>Comments:</comments>
                <div class="control-group">
                   <div class="controls">
-                    <textarea rows="3" placehoder="comment" name="comment" class="span6" onfocus="if (this.value=='Comments') this.value = ''">{% if query.comment %}{{ query.comment }}{% else %}Comments{% endif %}</textarea>
+                    <textarea rows="3" placehoder="comment" name="comment" class="span6" >{% if query.comment %}{{ query.comment }}{% else %}{% endif %}</textarea>
                   </div>
                 </div>
               
