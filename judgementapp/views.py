@@ -1,8 +1,10 @@
 # Create your views here.
+import cStringIO as StringIO
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import Context, loader, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
+from django.core.servers.basehttp import FileWrapper
 
 from judgementapp.models import *
 
@@ -16,6 +18,16 @@ def index(request):
     })
     return HttpResponse(template.render(context))
 
+def qrels(request):
+    judgements = Judgement.objects.exclude(relevance=-1)
+
+
+    response = HttpResponse(judgements, mimetype='application/force-download')
+    response['Content-Disposition'] = 'attachment; filename=qrels.txt'
+    #response['X-Sendfile'] = myfile
+    # It's usually a good idea to set the 'Content-Length' header too.
+    # You can also set any other required headers: Cache-Control, etc.
+    return response
 
 def query_list(request):
     queries = Query.objects.order_by('qId')

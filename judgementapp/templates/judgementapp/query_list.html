@@ -35,6 +35,9 @@
               </tbody>
             </table>
 
+            {% if queries %}
+              <a href="{% url 'judgementapp.views.qrels' %}" class="btn"><i class="icon-download"></i> Download Relevance Assessments (qrels)</a>
+            {% endif %}
         </div>
         
     </div>
