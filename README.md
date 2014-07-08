@@ -12,7 +12,14 @@ Relevation is aimed at anyone wishing to collection relevance assessment for inf
 
 ## Feautures
 
-Relevation! is build using Python's Django web framework Python's Django web framework
+Relevation! is build using Python's Django web framework and Twitter's Bootstrap.
+
+## Setup Steps
+
+1. Checkout relevation from github with: `git clone https://github.com/ielab/relevation.git`
+2. Copy your documents into the `relevation/documents` folder.
+3. Start Relevation! by running `./manage.py runserver`. Relevation! will be running at [http://127.0.0.1:8000](http://127.0.0.1:8000)
+4. Go to Setup page and upload your queries and document pool. (Queries are in the form queryId[tab]queryText; the pool is in standard TREC results format.)
 
 ## Use cases
 
