@@ -26,8 +26,8 @@ Relevation! is build using Python's Django web framework and Twitter's Bootstrap
 Relevation has been used in anger for:
 
 * CLEF eHealth Evaluation Lab 2013
-* Relevance assessment collection for Bevan Koopman's PhD thesis
+* Relevance assessment collection for [Bevan Koopman's](http://koopman.id.au) PhD thesis
 
 ## Authors and Support
 
-Relevation was designed by [Bevan Koopman](http://koopman.id.au) and Guido Zuccon. Relevation is an open source project still in development.
+Relevation was designed by [Bevan Koopman](http://koopman.id.au) and [Guido Zuccon](http://zuccon.net). Relevation is an open source project still in development.
