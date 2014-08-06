@@ -1,36 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Relevation! : Information Retrieval Relevance Judging System" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Relevation! by ielab</title>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Relevation!</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
-
   <body>
+    <div class="wrapper">
+      <header>
+        <h1>Relevation!</h1>
+        <p>Information Retrieval Relevance Judging System</p>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/ielab/relevation">View on GitHub</a>
+        <p class="view"><a href="https://github.com/ielab/relevation">View the Project on GitHub <small>ielab/relevation</small></a></p>
 
-          <h1 id="project_title">Relevation!</h1>
-          <h2 id="project_tagline">Information Retrieval Relevance Judging System</h2>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/ielab/relevation/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/ielab/relevation/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
+        <ul>
+          <li><a href="https://github.com/ielab/relevation/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/ielab/relevation/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/ielab/relevation">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
         <h3>
 <a name="welcome-to-relevation" class="anchor" href="#welcome-to-relevation"><span class="octicon octicon-link"></span></a>Welcome to Relevation!</h3>
 
@@ -46,17 +43,19 @@
 <h3>
 <a name="feautures" class="anchor" href="#feautures"><span class="octicon octicon-link"></span></a>Feautures</h3>
 
-<p>Relevation! is build using Python's Django web framework <a href="https://www.djangoproject.com/">Python's Django web framework</a> and Twitter's Bootstrap</p>
-
-<h3>Setup Steps</h3>
-
-<ul>
-<li>Checkout relevation from github with: git clone https://github.com/ielab/relevation.git</li>
-<li>Copy your documents into the relevation/documents folder.</li>
-<li>Start Relevation! by running ./manage.py runserver. Relevation! will be running at <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a></a></li>
-<li>Go to Setup page and upload your queries and document pool. (Queries are in the form queryId[tab]queryText; the pool is in standard TREC results format.)</li>
+<p>Relevation! is build using Python's Django web framework <a href="https://www.djangoproject.com/">Python's Django web framework</a> and <a href="http://getbootstrap.com/">Twitter's Bootstrap</a></p>
 
 <h3>
+<a name="setup-steps" class="anchor" href="#setup-steps"><span class="octicon octicon-link"></span></a>Setup Steps</h3>
+
+<ul>
+<li>Checkout relevation from github with: <code>git clone https://github.com/ielab/relevation.git</code>
+</li>
+<li>Copy your documents into the <code>relevation/documents</code> folder.</li>
+<li>Start Relevation! by running <code>./manage.py runserver</code>. Relevation! will be running at <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a>
+</li>
+<li>Go to Setup page and upload your queries and document pool. (Queries are in the form <code>queryId[tab]queryText</code>; the pool is in standard TREC results format.)</li>
+</ul><h3>
 <a name="use-cases" class="anchor" href="#use-cases"><span class="octicon octicon-link"></span></a>Use cases</h3>
 
 <p>Relevation has been used in anger for:</p>
@@ -69,17 +68,12 @@
 
 <p>Relevation was designed by <a href="http://koopman.id.au">Bevan Koopman</a> and Guido Zuccon. Relevation is an open source project still in development. </p>
       </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Relevation! maintained by <a href="https://github.com/ielab">ielab</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/ielab">ielab</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-
+    <script src="javascripts/scale.fix.js"></script>
     
-
   </body>
 </html>
