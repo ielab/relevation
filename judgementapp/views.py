@@ -82,11 +82,13 @@ def judge(request, qId, docId):
     query = get_object_or_404(Query, qId=qId)
     document = get_object_or_404(Document, docId=docId)
     relevance = request.POST['relevance']
+    readability = request.POST['readability']
     comment = request.POST['comment']
 
     judgements = Judgement.objects.filter(query=query.id)
     judgement, created = Judgement.objects.get_or_create(query=query.id, document=document.id)
     judgement.relevance = int(relevance)
+    judgement.readability = int(readability)
     if comment != 'Comment':
         judgement.comment = comment
     judgement.save()
@@ -129,9 +131,9 @@ def upload(request):
 
         qryCount = 0
         for query in f:
-            qid, txt = query.split("\t", 1)
+            qid, txt, diseas = query.split("\t", 2)
             qryCount = qryCount + 1
-            query = Query(qId=qid,text=txt)
+            query = Query(qId=qid,text=txt,diseases=diseas)
             query.save()
         context['queries'] = qryCount
 
@@ -154,6 +156,7 @@ def upload(request):
             judgement.query = query
             judgement.document = document
             judgement.relevance = -1
+            judgement.readability = -1
             
             judgement.save()
                 

@@ -23,12 +23,10 @@ class Document(models.Model):
 class Query(models.Model):
 	qId = models.IntegerField()
 	text = models.CharField(max_length=250)
+	diseases = models.TextField(blank=True, null=True)
 	difficulty = models.IntegerField(blank=True, null=True)
 	comment = models.TextField(blank=True, null=True)
 
-	instructions = models.TextField(blank=True, null=True)
-	criteria = models.TextField(blank=True, null=True)
-	example = models.TextField(blank=True, null=True)
 
 	def __unicode__(self):
 		return '%s: %s' % (self.qId, self.text)
@@ -45,13 +43,15 @@ class Query(models.Model):
 
 class Judgement(models.Model):
 
-	labels = {-1: 'Unjudged', 0: 'Not relvant', 1: 'Somewhat relevant', 2:'Highly relevant'}
-
 	query = models.ForeignKey(Query)
 	document = models.ForeignKey(Document)
 	comment = models.TextField(blank=True, null=True)
 
+	labels = {-1: 'Unjudged', 0: 'Not relvant', 1: 'Somewhat relevant', 2:'Highly relevant'}
 	relevance = models.IntegerField()
+
+	#readibility_labels = {0: 'Highly readable', 1: 'Somewhat readable', 2: ''}
+	readability = models.IntegerField()
 
 	def __unicode__(self):
 		return '%s\t0%s\t%s\n' % (self.query.qId, self.document.docId, self.relevance)

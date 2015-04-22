@@ -33,8 +33,8 @@
 
 	<div class="row">
         
-        <div class="span9", style="height:750px; position:relative; overflow-y: scroll;" id='content'>
-          <pre>{{ content }}</pre>
+        <div class="span9" style="height:750px; position:relative;"  id='content'>
+          <iframe width="100%" height="100%" src="{{ content }}"></iframe>
         </div>
       
         
@@ -68,9 +68,9 @@
             <form class="form-inline" action="{% url 'judgementapp.views.judge' qId=query.qId docId=document.docId %}" method="post">
                 {% csrf_token %}
 
-                {% if query.criteria %}
-                  <legend>Query Description</legend>
-                  Criteria: {{ query.criteria }}
+                {% if query.diseases %}
+                  <legend>Relevance Criteria</legend>
+                  Relevant documents should contain information allowing the user to understand that they have <em>{{ query.diseases }}</em>.
                 {% endif %}
 
                 <legend>Judgement</legend>
@@ -92,8 +92,33 @@
                       Not relevant
                     </label>
                 </div>
+                <legend>Readability</legend>
+                Do you think a patient would understand this document?
+                <div class="control-group">
+                  <label class="radio">
+                      <input type="radio" name="readability" id="readability" value="-1" {% if judgement.readability == -1 %} checked {% endif %}>
+                      Unjudged.
+                    </label><br>
+                    <label class="radio">
+                      <input type="radio" name="readability" id="readability1" value="0" {% if judgement.readability == 0 %} checked {% endif %}>
+                      It is very technical and difficult to read and understand.
+                    </label><br>
+                    <label class="radio">
+                     <input type="radio" name="readability" id="readability2" value="1" {% if judgement.readability == 1 %} checked {% endif %}>
+                      It is somewhat technical and difficult to read and understand.
+                    </label><br>
+                    <label class="radio">
+                      <input type="radio" name="readability" id="readability1" value="2" {% if judgement.readability == 2 %} checked {% endif %}>
+                      It is somewhat easy to read and understand.
+                    </label><br>
+                    <label class="radio">
+                      <input type="radio" name="readability" id="readability0" value="3" {% if judgement.readability == 3 %} checked {% endif %}>
+                      It is very easy to read and understand.
+                    </label>
+                </div>
+                <legend>Comment (optional)</legend>
                  <div class="control-group">
-                    <label>Comment:</label>
+                    
                     <div class="controls">
                       <textarea rows="10" class="span3", id="comment" name="comment">{% if judgement.comment %}{{ judgement.comment }}{% else %}{% endif %}</textarea>
                       <button type="button" class="btn btn-link" id="capture" onclick="captureSelection()">Insert Selected Text</button>
