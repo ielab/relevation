@@ -21,6 +21,8 @@ Relevation! is build using Python's Django web framework and Twitter's Bootstrap
 3. Start Relevation! by running `./manage.py runserver`. Relevation! will be running at [http://127.0.0.1:8000](http://127.0.0.1:8000)
 4. Go to Setup page and upload your queries and document pool. (Queries are in the form queryId[tab]queryText; the pool is in standard TREC results format.)
 
+You can also look at a demo that shows how to setup Relevation! from scratch; the demo is available at [https://vimeo.com/ielab/relevation](https://vimeo.com/ielab/relevation).
+
 ## Use cases
 
 Relevation has been used in anger for:
