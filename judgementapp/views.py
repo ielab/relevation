@@ -44,6 +44,8 @@ def query(request, qId):
             query.comment = request.POST['comment']
         query.save()
 
+    query.length = len(query.text)
+
     return render_to_response('judgementapp/query.html', {'query': query, 'judgements': judgements}, 
         context_instance=RequestContext(request))
 

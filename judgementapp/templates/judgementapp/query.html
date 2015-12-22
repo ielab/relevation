@@ -3,7 +3,7 @@
 {% block content %}
 
 	<div class="well">
-        <h2>{{ query.qId }} - {{ query.text }} <a style="text-align: right;", href="{% url 'judgementapp.views.query_list' %}" class="btn">Back to Queries</a></h2>
+        <h2> <span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.text }}</span> <a style="text-align: right;", href="{% url 'judgementapp.views.query_list' %}" class="btn">Back to Queries</a></h2>
 	    <p></p>
     </div>
 

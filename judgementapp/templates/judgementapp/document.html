@@ -8,7 +8,8 @@
 
 	   <div class="well">
 
-        <h2>{{ query.qId }} - {{ query.text }} <a style="text-align: right;", href="{% url 'judgementapp.views.query' qId=query.qId %}" class="btn">Back to Query</a></h2>
+        <h2><span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.text }}</span> <a style="text-align: right;", href="{% url 'judgementapp.views.query' qId=query.qId %}" class="btn">Back to Query</a></h2>
+        
         
     </div>
 
