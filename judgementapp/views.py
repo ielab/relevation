@@ -53,6 +53,7 @@ def query(request, qId):
 def document(request, qId, docId):
     document = Document.objects.get(docId=docId)
     query = Query.objects.get(qId=qId)
+    query.length = len(query.text)
 
     judgements = Judgement.objects.filter(query=query.id)
     judgement = Judgement.objects.filter(query=query.id, document=document.id)[0]

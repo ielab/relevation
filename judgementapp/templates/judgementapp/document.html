@@ -34,8 +34,8 @@
 
 	<div class="row">
         
-        <div class="span9", style="height:750px; position:relative; overflow-y: scroll;" id='content'>
-          <pre>{{ content }}</pre>
+        <div class="span12" id='content'>
+          <iframe src="https://clinicaltrials.gov/ct2/show/study/{{ document.docId }}" width="100%" style="height: 800px"></iframe>
         </div>
       
         
@@ -61,11 +61,17 @@
             if (textarea.value.length > 0) {
               textarea.value = textarea.value + '\n';
             }
-            textarea.value = textarea.value + '"' + getSelectedText() + '"';
+
+            if (getSelectedText().length > 0) {
+              textarea.value = textarea.value + '"' + getSelectedText() + '"';
+            }
           }
     </script>
+    </div>
 
-        <div class="span3">
+    <div class="row">
+
+        <div class="span12">
             <form class="form-inline" action="{% url 'judgementapp.views.judge' qId=query.qId docId=document.docId %}" method="post">
                 {% csrf_token %}
 
@@ -96,7 +102,7 @@
                  <div class="control-group">
                     <label>Comment:</label>
                     <div class="controls">
-                      <textarea rows="10" class="span3", id="comment" name="comment">{% if judgement.comment %}{{ judgement.comment }}{% else %}{% endif %}</textarea>
+                      <textarea rows="10" class="span3", id="comment" name="comment">{% if judgement.comment %}{{ judgement.comment }}{% else %}{% endif %}</textarea><br>
                       <button type="button" class="btn btn-link" id="capture" onclick="captureSelection()">Insert Selected Text</button>
                     </div>
                   </div>

@@ -14,7 +14,7 @@ class Document(models.Model):
 	def get_content(self):
 		content = ""
 		try:
-			with open(settings.DATA_DIR+"/"+self.docId) as f:
+			with open(settings.DATA_DIR+"/"+self.docId+".xml") as f:
 				content = f.read()
 		except Exception:
 			content = "Could not read file %s" % settings.DATA_DIR+"/"+self.docId
