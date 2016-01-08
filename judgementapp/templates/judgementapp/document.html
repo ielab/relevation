@@ -35,7 +35,7 @@
 	<div class="row">
         
         <div class="span12" id='content'>
-          <iframe src="https://clinicaltrials.gov/ct2/show/study/{{ document.docId }}" width="100%" style="height: 800px"></iframe>
+          <pre>{{ content }}</pre>
         </div>
       
         
@@ -80,7 +80,7 @@
                   Criteria: {{ query.criteria }}
                 {% endif %}
 
-                <legend>Judgement</legend>
+                <legend>Eligibility of the patient</legend>
                 <div class="control-group">
                     <label class="radio">
                       <input type="radio" name="relevance" id="relevance1" value="-1" {% if judgement.relevance == -1 %} checked {% endif %}>
@@ -88,19 +88,19 @@
                     </label><br>
                     <label class="radio">
                      <input type="radio" name="relevance" id="relevance2" value="2" {% if judgement.relevance == 2 %} checked {% endif %}>
-                      Highly relevant
+                      Highly likely to refer this patient for this clinical trial.
                     </label><br>
                     <label class="radio">
                       <input type="radio" name="relevance" id="relevance1" value="1" {% if judgement.relevance == 1 %} checked {% endif %}>
-                      Somewhat relevant
+                      Would consider referring this patient to this clinical trial upon further investigation.
                     </label><br>
                     <label class="radio">
                       <input type="radio" name="relevance" id="relevance0" value="0" {% if judgement.relevance == 0 %} checked {% endif %}>
-                      Not relevant
+                      Would not refer this patient for this clinical trial.
                     </label>
                 </div>
                  <div class="control-group">
-                    <label>Comment:</label>
+                    <label>Comment: (any details about the rationale for your assessment of this patient)</label>
                     <div class="controls">
                       <textarea rows="10" class="span3", id="comment" name="comment">{% if judgement.comment %}{{ judgement.comment }}{% else %}{% endif %}</textarea><br>
                       <button type="button" class="btn btn-link" id="capture" onclick="captureSelection()">Insert Selected Text</button>

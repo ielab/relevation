@@ -83,6 +83,7 @@ def document(request, qId, docId):
 
 def judge(request, qId, docId):
     query = get_object_or_404(Query, qId=qId)
+    query.length = len(query.text)
     document = get_object_or_404(Document, docId=docId)
     relevance = request.POST['relevance']
     comment = request.POST['comment']
@@ -94,8 +95,6 @@ def judge(request, qId, docId):
         judgement.comment = comment
     judgement.save()
 
-    
-
     next = None
     try:
         next = Judgement.objects.filter(query=query.id).get(id=judgement.id+1)
@@ -103,7 +102,8 @@ def judge(request, qId, docId):
             document = next.document
             judgement = next
             next = Judgement.objects.filter(query=query.id).get(id=judgement.id+1)
-    except:
+    except Exception as e:
+        next = None;
         pass
 
     prev = None
@@ -118,6 +118,7 @@ def judge(request, qId, docId):
             rank = count+1
             break
 
+    
 
     content = document.get_content()
 

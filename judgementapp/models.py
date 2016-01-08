@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from xml.dom import minidom
 
 # Create your models here.
 
@@ -14,10 +15,11 @@ class Document(models.Model):
 	def get_content(self):
 		content = ""
 		try:
-			with open(settings.DATA_DIR+"/"+self.docId+".xml") as f:
-				content = f.read()
+			xmldoc = minidom.parse(settings.DATA_DIR+"/"+self.docId+".xml")
+			eligibility_criteria = xmldoc.getElementsByTagName('eligibility')[0].getElementsByTagName('criteria')[0].getElementsByTagName('textblock')[0].firstChild.nodeValue
+			content = eligibility_criteria
 		except Exception:
-			content = "Could not read file %s" % settings.DATA_DIR+"/"+self.docId
+			content = "Could not read file %s" % settings.DATA_DIR+"/"+self.docId+".xml"
 		return content
 
 class Query(models.Model):
