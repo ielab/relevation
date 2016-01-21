@@ -33,7 +33,7 @@ class Query(models.Model):
 	example = models.TextField(blank=True, null=True)
 
 	def __unicode__(self):
-		return '%s: %s' % (self.qId, self.text)
+		return '%s: (%s) %s' % (self.id, self.qId, self.text)
 
 	def num_unjudged_docs(self):
 		unjugded = [judgement for judgement in self.judgements() if judgement.relevance < 0]
@@ -56,7 +56,7 @@ class Judgement(models.Model):
 	relevance = models.IntegerField()
 
 	def __unicode__(self):
-		return '%s\t0%s\t%s\n' % (self.query.qId, self.document.docId, self.relevance)
+		return '%s\t0\t%s\t%s\n' % (self.query.qId, self.document.docId, self.relevance)
 
 
 	def label(self):
