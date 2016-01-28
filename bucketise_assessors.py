@@ -26,8 +26,8 @@ def main(results, assessors):
 	print "Query allocations:"
 	for idx in query_buckets:
 		print chr(ord('A') + idx), "\t", 
-		for qid in query_buckets[idx]:
-			print qid,
+		for qid in sorted(query_buckets[idx]):
+			print qid+"\t",
 		print
 	
 	print "\nDocuments per assessor:"

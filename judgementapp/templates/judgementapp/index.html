@@ -9,19 +9,28 @@
 
     <div class="row">
         
-        <div class="span6">
+        <div class="span4">
             <h2>Instructions</h2>
 
-            <p>Details of how to perform judging.</p>
+            <p>Details of how to use this judging system, including viewing patient queries and clinical trials.</p>
 
             <p><a class="btn" href="{% url 'judgementapp.views.index' %}about">Judging instructions &raquo;</a></p>
         </div>
-        <div class="span6">
-            <h2>Patient queries list</h2>
+        
+        <div class="span4">
+            <h2>Assigned Queries</h2>
+
+            <p>View the list of patient queries assigned to you and record your progress.</p>
+
+            <p><a class="btn" href="http://bit.ly/1SLmdPj">Assigned queries and progress &raquo;</a></p>
+        </div>
+
+        <div class="span4">
+            <h2>Begin Judging</h2>
 
             <p>Take a look at the current patient queries in the systems and begin judging.</p>
 
-            <p><a class="btn" href="{% url 'judgementapp.views.query_list' %}">Begin judging patient queries &raquo;</a></p>
+            <p><a class="btn" href="{% url 'judgementapp.views.query_list' %}">Begin judging &raquo;</a></p>
         </div>
     </div>
 
