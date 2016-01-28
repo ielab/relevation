@@ -25,14 +25,14 @@ def main(results, assessors):
 
 	print "Query allocations:"
 	for idx in query_buckets:
-		print idx+1, "\t", 
+		print chr(ord('A') + idx), "\t", 
 		for qid in query_buckets[idx]:
 			print qid,
 		print
 	
 	print "\nDocuments per assessor:"
 	for idx in doc_buckets:
-		print idx+1, "\t", doc_buckets[idx]
+		print chr(ord('A') + idx), "\t", doc_buckets[idx]
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="Read TREC results file for relevation input and assign queries to assessors.")

@@ -2,8 +2,72 @@
 
 {% block content %}
 
-    <p>Relevation was created by <a href="http://koopman.id.au">Bevan Koopman</a> and Guido Zuccon, the system is designed to enable catpure relevance judgement for Information Retrieval system evaluation.</p>
+    <div class="well">
+        <h2>Judging Instructions</h2>
+	    
+    </div>
 
-    <p>Find more on the <a href="http://github.com/ielab/relevation">Github Relevation!</a> page.
+	<div class="row">
+
+      <div class="span12">
+        		
+
+        
+
+		    <h3>Step 1: Select the Patient Queries</h3>
+
+		    <ol>
+
+		    <li>Select <em>Patient Queries</em> to begin. You will be presented with a list of queries as shown in Figure 1.</li>
+
+		    <li>For each patient query, the total number of documents is displayed, as well as the number of documents that are still to be judged.</li>
+
+		    <li>Click on a patient query to begin.</li>
+		    </ol>
+
+		    <div class="thumbnail">
+      		<img src="http://koopman.id.au/img/queries.png" alt="Screenshot of current patient queries.">
+      		<div class="caption">
+        		<p><strong>Figure 1: Patient query list.</strong> </p>
+       		</div>
+    		</div>
+
+    		<h3>Step 2: View the documents for a patient query.</h3>
+
+    		<ol>
+		    <li>Once you select a patient you will be presented with the list of clinical trial documents (Figure 2).</li>
+
+		    <li>For each document query, its status (Highly relevant, Somewhat relevant, Not relevant or Unjudged) is displayed.</li>
+
+		    <li>Click on a document to judge it.</li>
+		    </ol>
+
+		    <div class="thumbnail">
+      		<img src="http://koopman.id.au/img/documents.png" alt="Screenshot of current patient queries.">
+      		<div class="caption">
+        		<p><strong>Figure 2: List of clinical trial documents for a patient query.</strong> </p>
+       		</div>
+    		</div>
+
+    		<h3>Step 3: Judge a clinical trial document.</h3>
+
+    		<ol>
+		    <li>Once you select a document you will be presented with the inclusion and exclusion criteria of the clinical trial (Figure 3).</li>
+
+		    <li>Read the clinical trial (and re-read the patient query if need-be) and then make your assessment on the form provided. If you have any comment regarding your assessment then please provide this in the comments section.</li>
+
+		    <li>Clicking <em>Save</em> will record your assessment; clicking <em>Save & Next</em> will save your assessment and bring up the next document in the list.</li>
+
+		    </ol>
+		    <div class="thumbnail">
+      		<img src="http://koopman.id.au/img/judgement.png" alt="Screenshot of current patient queries.">
+      		<div class="caption">
+        		<p><strong>Figure 3: Judging a clinical trial.</strong> </p>
+       		</div>
+    		</div>
+            
+      </div>
+        
+    </div>
 
 {% endblock %}
