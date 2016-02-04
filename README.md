@@ -27,7 +27,8 @@ You can also look at a demo that shows how to setup Relevation! from scratch; th
 
 Relevation has been used in anger for:
 
-* CLEF eHealth Evaluation Lab 2013
+* CLEF eHealth Evaluation Lab: 2013-2016
+* [ECIR diagnose me paper](http://zuccon.net/diagnose-this.html)
 * Relevance assessment collection for [Bevan Koopman's](http://koopman.id.au) PhD thesis
 
 ## Authors and Support
