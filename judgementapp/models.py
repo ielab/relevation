@@ -27,7 +27,6 @@ class Query(models.Model):
 	difficulty = models.IntegerField(blank=True, null=True)
 	comment = models.TextField(blank=True, null=True)
 
-
 	def __unicode__(self):
 		return '%s: %s' % (self.qId, self.text)
 
@@ -43,19 +42,23 @@ class Query(models.Model):
 
 class Judgement(models.Model):
 
-	query = models.ForeignKey(Query)
-	document = models.ForeignKey(Document)
-	comment = models.TextField(blank=True, null=True)
+    query = models.ForeignKey(Query)
+    document = models.ForeignKey(Document)
+    comment = models.TextField(blank=True, null=True)
 
-	labels = {-1: 'Unjudged', 0: 'Not relvant', 1: 'Somewhat relevant', 2:'Highly relevant'}
-	relevance = models.IntegerField()
+    topic_labels = {-1: 'Unjudged', 0: 'Not relvant', 1: 'Somewhat relevant', 2:'Highly relevant'}
+    readability_labels = {-1: 'Unjudged', 0: 'Very Hard', 1: 'Somewhat Hard', 2:'Somewhat Easy', 3:'Very Easy'}
+    relevance = models.IntegerField()
 
-	#readibility_labels = {0: 'Highly readable', 1: 'Somewhat readable', 2: ''}
-	readability = models.IntegerField()
+    #readibility_labels = {0: 'Highly readable', 1: 'Somewhat readable', 2: ''}
+    readability = models.IntegerField()
 
-	def __unicode__(self):
-		return '%s\t0%s\t%s\n' % (self.query.qId, self.document.docId, self.relevance)
+    def __unicode__(self):
+        return '%s\t0%s\t%s\n' % (self.query.qId, self.document.docId, self.relevance)
 
+    def tlabel(self):
+        return self.topic_labels[self.relevance]
 
-	def label(self):
-		return self.labels[self.relevance]
+    def rlabel(self):
+        return self.readability_labels[self.readability]
+

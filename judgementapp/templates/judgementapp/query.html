@@ -16,7 +16,8 @@
                   <th>Query</th>
                   <th>Number</th>
                   <th>Document#</th>
-                  <th>Status</th>
+                  <th>Relevance</th>
+                  <th>Readability</th>
                 </tr>
               </thead>
               <tbody>
@@ -30,7 +31,15 @@
                       {% if judgement.relevance == 0 %} red {% endif %}
                       {% if judgement.relevance == 1 %} orange {% endif %}
                       {% if judgement.relevance == 2 %} green {% endif %}
-                    " >{{ judgement.label }}</td>
+                    " >{{ judgement.tlabel }}</td>
+                    <td style="color: 
+                      {% if judgement.readability == -1 %} black {% endif %}
+                      {% if judgement.readability == 0 %} red {% endif %}
+                      {% if judgement.readability == 1 %} brown  {% endif %}
+                      {% if judgement.readability == 2 %} olive {% endif %}
+                      {% if judgement.readability == 3 %} green {% endif %}
+                    " >{{ judgement.rlabel }}</td>
+
                   </tr>
                 {% endfor %}
               </tbody>
