@@ -6,7 +6,6 @@ from django.db import models
 
 class Document(models.Model):
 	docId = models.CharField(max_length=250)
-	text = models.TextField()
 
 	def __unicode__(self):
 		return self.docId

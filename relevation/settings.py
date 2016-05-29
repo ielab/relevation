@@ -2,8 +2,10 @@
 
 import os
 
+# Customize settings
 DATA_DIR=os.getcwd()+'/documents'
 URL_PREFIX=''
+DOCUMENT_TYPE = 'Document'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
