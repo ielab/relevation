@@ -15,15 +15,15 @@
 
     <div class="row">
       
-      <div class="span3">
+      <div class="col-md-3">
       {% if prev %}
         <a href="{% url 'judgementapp.views.document' qId=query.qId docId=prev.document.docId %}" class="btn">Prev Document</a>
       {% endif %}
       </div>
 
-      <div class="span6"><h3 style="text-align: center;">Document "{{ document.docId }}" ({{ rank }} / {{total_rank}}) </h3></div>
+      <div class="col-md-6"><h3 style="text-align: center;">Document "{{ document.docId }}" ({{ rank }} / {{total_rank}}) </h3></div>
 
-      <div class="span3" align="right">
+      <div class="col-md3" align="right">
       {% if next %}
         <a href="{% url 'judgementapp.views.document' qId=query.qId docId=next.document.docId %}" class="btn">Next Document</a>
       {% endif %}
@@ -34,7 +34,7 @@
 
 	<div class="row">
         
-        <div class="span9", style="height:750px; position:relative; overflow-y: scroll;" id='content'>
+        <div class="col-md-9", style="height:750px; position:relative; overflow-y: scroll;" id='content'>
           <pre>{{ content }}</pre>
         </div>
       
@@ -65,7 +65,7 @@
           }
     </script>
 
-        <div class="span3">
+        <div class="col-md-3">
             <form class="form-inline" action="{% url 'judgementapp.views.judge' qId=query.qId docId=document.docId %}" method="post">
                 {% csrf_token %}
 

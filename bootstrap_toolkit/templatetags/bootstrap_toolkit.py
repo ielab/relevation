@@ -8,7 +8,7 @@ from django import template
 from django.conf import settings
 
 BOOTSTRAP_BASE_URL = getattr(settings, 'BOOTSTRAP_BASE_URL',
-    'http://twitter.github.io/bootstrap/assets/'
+    'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/'
 )
 
 BOOTSTRAP_JS_BASE_URL = getattr(settings, 'BOOTSTRAP_JS_BASE_URL',

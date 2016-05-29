@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% autoescape off %}
 {% load bootstrap_toolkit %}
 <html lang="en">
 <head>
@@ -24,35 +25,37 @@
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     {% bootstrap_javascript_tag %}
     {% block extra_head %}{% endblock %}
 </head>
 
 <body>
 
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="brand" href="{% url 'judgementapp.views.index' %}">relevation</a>
-            <ul class="nav">
-                <li><a href="{% url 'judgementapp.views.index' %}" class="">Home</a></li>
-                <li><a href="{% url 'judgementapp.views.index' %}upload">Setup</a></li>
-                <li class="dropdown">
-                    <ul class="dropdown-menu">
-                        <li><a class="nav" href="?layout=vertical">Vertical</a></li>
-                        <li><a href="?layout=horizontal">Horizontal</a></li>
-                        <li><a href="?layout=inline">Inline</a></li>
-                        <li><a href="?layout=search">Search</a></li>
-                        <li><a href="?layout=horizontal">Using template</a></li>
-                    </ul>
-                </li>
-                <li><a href="{% url 'judgementapp.views.index' %}about">About</a></li>
-                <li><a href="{% url 'judgementapp.views.query_list' %}">Queries</a></li>
-            </ul>
+<nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'judgementapp.views.index' %}">relevation</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'judgementapp.views.index' %}" class="">Home</a></li>
+                    <li><a href="{% url 'judgementapp.views.index' %}upload">Setup</a></li>
+                    <li class="dropdown">
+                        <ul class="dropdown-menu">
+                            <li><a class="nav" href="?layout=vertical">Vertical</a></li>
+                            <li><a href="?layout=horizontal">Horizontal</a></li>
+                            <li><a href="?layout=inline">Inline</a></li>
+                            <li><a href="?layout=search">Search</a></li>
+                            <li><a href="?layout=horizontal">Using template</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'judgementapp.views.index' %}about">About</a></li>
+                    <li><a href="{% url 'judgementapp.views.query_list' %}">Queries</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-</div>
+</nav>
 
 <div class="container">
 
@@ -77,3 +80,4 @@
 
 </body>
 </html>
+{% endautoescape %}

@@ -1,10 +1,10 @@
 # Create your views here.
 import cStringIO as StringIO
+from wsgiref.util import FileWrapper
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import Context, loader, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
-from django.core.servers.basehttp import FileWrapper
 
 from judgementapp.models import *
 
@@ -46,7 +46,7 @@ def query(request, qId):
 
     query.length = len(query.text)
 
-    return render_to_response('judgementapp/query.html', {'query': query, 'judgements': judgements}, 
+    return render_to_response('judgementapp/query.html', {'query': query, 'judgements': judgements},
         context_instance=RequestContext(request))
 
 
@@ -77,7 +77,7 @@ def document(request, qId, docId):
 
     content = document.get_content()
 
-    return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement, 
+    return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement,
         'next': next, 'prev': prev, 'rank': rank, 'total_rank': judgements.count(), 'content': content.strip()}, context_instance=RequestContext(request))
 
 def judge(request, qId, docId):
@@ -93,7 +93,7 @@ def judge(request, qId, docId):
         judgement.comment = comment
     judgement.save()
 
-    
+
 
     next = None
     try:
@@ -120,7 +120,7 @@ def judge(request, qId, docId):
 
     content = document.get_content()
 
-    return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement, 
+    return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement,
         'next': next, 'prev': prev, 'rank': rank, 'total_rank': judgements.count(), 'content': content.strip()}, context_instance=RequestContext(request))
 
 
@@ -145,7 +145,7 @@ def upload(request):
             qid, z, doc, rank, score, desc = result.split()
             docCount = docCount + 1
             doc = doc.replace('corpus/', '')
-            
+
             document, created = Document.objects.get_or_create(docId=doc)
             document.text = "TBA"
 
@@ -156,9 +156,9 @@ def upload(request):
             judgement.query = query
             judgement.document = document
             judgement.relevance = -1
-            
+
             judgement.save()
-                
+
         context['results'] = docCount
 
     return render_to_response('judgementapp/upload.html', context)
