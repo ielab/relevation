@@ -3,9 +3,11 @@
 import os
 
 # Customize settings
+DOCUMENT_TYPE = 'Clueweb'
 DATA_DIR=os.getcwd()+'/documents'
+CLUEWEB_CGI_API = 'http://boston.lti.cs.cmu.edu/Services/clueweb09_catb/lemur.cgi?e='
+
 URL_PREFIX=''
-DOCUMENT_TYPE = 'Document'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),

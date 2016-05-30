@@ -1,23 +1,23 @@
 from django.conf import settings
 from django.db import models
 
+import doc_loader
+
 # Create your models here.
 
 
 class Document(models.Model):
 	docId = models.CharField(max_length=250)
 
+	# document loader dependent on settings
+	loader_cls = settings.DOCUMENT_TYPE + "Loader"
+	loader_inst = getattr(doc_loader, loader_cls)()
+
 	def __unicode__(self):
 		return self.docId
 
 	def get_content(self):
-		content = ""
-		try:
-			with open(settings.DATA_DIR+"/"+self.docId) as f:
-				content = f.read()
-		except Exception:
-			content = "Could not read file %s" % settings.DATA_DIR+"/"+self.docId
-		return content
+		return Document.loader_inst.get_content(self.docId)
 
 class Query(models.Model):
 	qId = models.IntegerField()

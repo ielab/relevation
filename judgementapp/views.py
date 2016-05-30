@@ -147,7 +147,6 @@ def upload(request):
             doc = doc.replace('corpus/', '')
 
             document, created = Document.objects.get_or_create(docId=doc)
-            document.text = "TBA"
 
             query = Query.objects.get(qId=qid)
             document.save()
