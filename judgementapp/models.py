@@ -47,13 +47,14 @@ class Judgement(models.Model):
 	labels = {-1: 'Unjudged', 0: 'Not relvant', 1: 'Somewhat relevant', 2:'Highly relevant'}
 
 	query = models.ForeignKey(Query)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL)
 	document = models.ForeignKey(Document)
 	comment = models.TextField(blank=True, null=True)
 
 	relevance = models.IntegerField()
 
 	def __unicode__(self):
-		return '%s\t0%s\t%s\n' % (self.query.qId, self.document.docId, self.relevance)
+		return '%s\t0%s\t%s\n' % (self.query.qId, self.user.username, self.document.docId, self.relevance)
 
 
 	def label(self):

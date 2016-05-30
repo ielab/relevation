@@ -47,7 +47,8 @@ def query_list(request):
 @login_required
 def query(request, qId):
     query = Query.objects.get(qId=qId)
-    judgements = Judgement.objects.filter(query=query.id)
+    user = request.user
+    judgements = Judgement.objects.filter(user=user.id, query=query.id)
 
     if "difficulty" in request.POST:
         query.difficulty = int(request.POST['difficulty'])
@@ -145,8 +146,7 @@ def upload(request):
         for query in f:
             qid, txt = query.split("\t", 1)
             qryCount = qryCount + 1
-            query = Query(qId=qid,text=txt)
-            query.save()
+            query, created = Query.objects.get_or_create(qId=qid,text=txt)
         context['queries'] = qryCount
 
     if 'resultsFile' in request.FILES:
@@ -156,7 +156,6 @@ def upload(request):
         for result in f:
             qid, z, doc, rank, score, desc = result.split()
             docCount = docCount + 1
-            doc = doc.replace('corpus/', '')
 
             document, created = Document.objects.get_or_create(docId=doc)
 
@@ -166,6 +165,7 @@ def upload(request):
             judgement = Judgement()
             judgement.query = query
             judgement.document = document
+            judgement.user = request.user
             judgement.relevance = -1
 
             judgement.save()
