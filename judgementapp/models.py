@@ -42,6 +42,13 @@ class Query(models.Model):
 	def judgements(self):
 		return Judgement.objects.filter(query=self.id)
 
+class JudgementTemplate(models.Model):
+	query = models.ForeignKey(Query)
+	document = models.ForeignKey(Document)
+
+	def __unicode__(self):
+		return '%s\t%s\n' % (self.query.qId, self.document.docId)
+
 class Judgement(models.Model):
 
 	labels = {-1: 'Unjudged', 0: 'Not relvant', 1: 'Somewhat relevant', 2:'Highly relevant'}
@@ -54,7 +61,7 @@ class Judgement(models.Model):
 	relevance = models.IntegerField()
 
 	def __unicode__(self):
-		return '%s\t0%s\t%s\n' % (self.query.qId, self.user.username, self.document.docId, self.relevance)
+		return '%s\t%s\t%s\t%s\n' % (self.query.qId, self.user.username, self.document.docId, self.relevance)
 
 
 	def label(self):

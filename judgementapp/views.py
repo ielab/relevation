@@ -48,7 +48,19 @@ def query_list(request):
 def query(request, qId):
     query = Query.objects.get(qId=qId)
     user = request.user
+
+    judgement_templates = JudgementTemplate.objects.filter(query=query.id)
     judgements = Judgement.objects.filter(user=user.id, query=query.id)
+    if len(judgements) == 0:
+        print "Creating judgements..."
+        for template in judgement_templates:
+            judgement = Judgement()
+            judgement.user = user
+            judgement.query = query
+            judgement.document = template.document
+            judgement.relevance = -1
+            judgement.save()
+        judgements = Judgement.objects.filter(user=user.id, query=query.id)
 
     if "difficulty" in request.POST:
         query.difficulty = int(request.POST['difficulty'])
@@ -73,7 +85,6 @@ def document(request, qId, docId):
         if j.id == judgement.id:
             rank = count+1
             break
-
 
     prev = None
     try:
@@ -162,13 +173,11 @@ def upload(request):
             query = Query.objects.get(qId=qid)
             document.save()
 
-            judgement = Judgement()
-            judgement.query = query
-            judgement.document = document
-            judgement.user = request.user
-            judgement.relevance = -1
+            judgement_template = JudgementTemplate()
+            judgement_template.query = query
+            judgement_template.document = document
 
-            judgement.save()
+            judgement_template.save()
 
         context['results'] = docCount
 
