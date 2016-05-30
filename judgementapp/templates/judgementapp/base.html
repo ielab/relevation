@@ -40,7 +40,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="{% url 'judgementapp.views.index' %}" class="">Home</a></li>
+                    {% if user.is_staff %}
                     <li><a href="{% url 'judgementapp.views.index' %}upload">Setup</a></li>
+                    {% endif %}
                     <li class="dropdown">
                         <ul class="dropdown-menu">
                             <li><a class="nav" href="?layout=vertical">Vertical</a></li>
@@ -52,6 +54,7 @@
                     </li>
                     <li><a href="{% url 'judgementapp.views.index' %}about">About</a></li>
                     <li><a href="{% url 'judgementapp.views.query_list' %}">Queries</a></li>
+                    <li><a href="{% url 'django.contrib.auth.views.logout' %}" class=""><strong>Logout</strong></a></li>
                 </ul>
             </div>
         </div>

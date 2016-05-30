@@ -1,23 +1,32 @@
 # Create your views here.
 import cStringIO as StringIO
 from wsgiref.util import FileWrapper
+from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import Context, loader, RequestContext
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, render
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 
 from judgementapp.models import *
 
+@login_required
 def index(request):
     queries = Query.objects.order_by('qId')
     output = ', '.join([q.text for q in queries])
 
     template = loader.get_template('judgementapp/index.html')
-    context = Context({
-        'queries': queries,
-    })
+    context = RequestContext(request)
+    context['queries'] = queries
+    # context = Context({
+    #     'queries': queries,
+    # })
     return HttpResponse(template.render(context))
 
+@login_required
 def qrels(request):
     judgements = Judgement.objects.exclude(relevance=-1)
 
@@ -29,11 +38,13 @@ def qrels(request):
     # You can also set any other required headers: Cache-Control, etc.
     return response
 
+@login_required
 def query_list(request):
     queries = Query.objects.order_by('qId')
 
     return render_to_response('judgementapp/query_list.html', { 'queries': queries}, context_instance=RequestContext(request))
 
+@login_required
 def query(request, qId):
     query = Query.objects.get(qId=qId)
     judgements = Judgement.objects.filter(query=query.id)
@@ -49,7 +60,7 @@ def query(request, qId):
     return render_to_response('judgementapp/query.html', {'query': query, 'judgements': judgements},
         context_instance=RequestContext(request))
 
-
+@login_required
 def document(request, qId, docId):
     document = Document.objects.get(docId=docId)
     query = Query.objects.get(qId=qId)
@@ -80,6 +91,7 @@ def document(request, qId, docId):
     return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement,
         'next': next, 'prev': prev, 'rank': rank, 'total_rank': judgements.count(), 'content': content.strip()}, context_instance=RequestContext(request))
 
+@login_required
 def judge(request, qId, docId):
     query = get_object_or_404(Query, qId=qId)
     document = get_object_or_404(Document, docId=docId)
@@ -123,7 +135,7 @@ def judge(request, qId, docId):
     return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement,
         'next': next, 'prev': prev, 'rank': rank, 'total_rank': judgements.count(), 'content': content.strip()}, context_instance=RequestContext(request))
 
-
+@staff_member_required
 def upload(request):
     context = {}
     if 'queryFile' in request.FILES:
@@ -162,9 +174,17 @@ def upload(request):
 
     return render_to_response('judgementapp/upload.html', context)
 
-
-
-
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            return HttpResponseRedirect("/")
+    else:
+        form = UserCreationForm()
+    return render(request, "registration/signup.html", {
+        'form': form,
+    })
 
 
 
