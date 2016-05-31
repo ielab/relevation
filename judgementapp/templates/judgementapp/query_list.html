@@ -7,6 +7,38 @@
 	    <p></p>
     </div>
 
+  <div class="row">
+
+        <div class="span12">
+          <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>QueryId</th>
+                  <th>Text</th>
+                  <th>Number of documents</th>
+                  <th>Number unjudged</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for query in claimed_queries %}
+                  
+                <tr>
+                    <td>{{ query.qId }} </td>
+                    <td><a href="{% url 'judgementapp.views.query' qId=query.qId%}">{{ query.text }}</a></td>
+                    <td>{{ query.num_judgements }}</td>
+                    <td {% if query.num_unjudged_docs > 0 %} style="color: red" {% endif %}>{{ query.num_unjudged_docs }}</td>
+                  </tr>
+                {% endfor %}
+                
+        
+              </tbody>
+            </table>
+
+        </div>
+        
+    </div>  
+
 	<div class="row">
 
         <div class="span12">
@@ -25,9 +57,9 @@
                   
                 <tr>
                     <td>{{ query.qId }} </td>
-                    <td><a href="{% url 'judgementapp.views.query' qId=query.qId%}">{{ query.text }}</a></td>
+                    <td>{{ query.text }}</td>
                     <td>{{ query.num_judgements }}</td>
-                    <td {% if query.num_unjudged_docs > 0 %} style="color: red" {% endif %}>{{ query.num_unjudged_docs }}</td>
+                    <td><a href="{% url 'judgementapp.views.claim' qId=query.qId %}">claim</a></td>
                   </tr>
                 {% endfor %}
                 

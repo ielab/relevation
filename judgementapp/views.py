@@ -5,7 +5,7 @@ from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import Context, loader, RequestContext
-from django.shortcuts import render_to_response, get_object_or_404, render
+from django.shortcuts import render_to_response, get_object_or_404, render, redirect
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -41,13 +41,42 @@ def qrels(request):
 @login_required
 def query_list(request):
     queries = Query.objects.order_by('qId')
+    user = request.user
+    
+    unclaimed_queries = []
+    claimed_queries = []
     for query in queries:
-        query.prepare_judgements(request.user.id)
+        claimed_users = set(Judgement.objects.filter(query=query).values_list('user', flat=True))
+        if len(claimed_users) < settings.MAX_USER_PER_QUERY:
+            unclaimed_queries.append(query)
+        if user.id in claimed_users:
+            query.prepare_judgements(user.id)
+            claimed_queries.append(query)
 
-    return render_to_response('judgementapp/query_list.html', { 'queries': queries}, context_instance=RequestContext(request))
+    return render_to_response('judgementapp/query_list.html', 
+        { 'queries': unclaimed_queries, 'claimed_queries': claimed_queries }, 
+        context_instance=RequestContext(request))
 
 @login_required
 def query(request, qId):
+    query = Query.objects.get(qId=qId)
+    user = request.user
+
+    judgements = Judgement.objects.filter(user=user.id, query=query.id)
+
+    if "difficulty" in request.POST:
+        query.difficulty = int(request.POST['difficulty'])
+        if "comment" in request.POST:
+            query.comment = request.POST['comment']
+        query.save()
+
+    query.length = len(query.text)
+
+    return render_to_response('judgementapp/query.html', {'query': query, 'judgements': judgements},
+        context_instance=RequestContext(request))
+
+@login_required
+def claim(request, qId):
     query = Query.objects.get(qId=qId)
     user = request.user
 
@@ -63,17 +92,7 @@ def query(request, qId):
             judgement.relevance = -1
             judgement.save()
         judgements = Judgement.objects.filter(user=user.id, query=query.id)
-
-    if "difficulty" in request.POST:
-        query.difficulty = int(request.POST['difficulty'])
-        if "comment" in request.POST:
-            query.comment = request.POST['comment']
-        query.save()
-
-    query.length = len(query.text)
-
-    return render_to_response('judgementapp/query.html', {'query': query, 'judgements': judgements},
-        context_instance=RequestContext(request))
+    return redirect(query_list)
 
 @login_required
 def document(request, qId, docId):
