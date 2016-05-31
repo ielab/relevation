@@ -35,7 +35,7 @@
               </tbody>
             </table>
 
-            {% if queries %}
+            {% if user.is_staff and queries %}
               <a href="{% url 'judgementapp.views.qrels' %}" class="btn"><i class="icon-download"></i> Download Relevance Assessments (qrels)</a>
             {% endif %}
         </div>
