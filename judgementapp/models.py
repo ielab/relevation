@@ -33,14 +33,19 @@ class Query(models.Model):
 		return '%s: %s' % (self.qId, self.text)
 
 	def num_unjudged_docs(self):
-		unjugded = [judgement for judgement in self.judgements() if judgement.relevance < 0]
-		return len(unjugded)
+		return self.num_judgements() - len(self.judgements())
 
 	def num_judgements(self):
-		return len(self.judgements())
+		return len(self.judgement_templates())
+
+	def prepare_judgements(self, userid):
+		self._judgements = [judgement for judgement in Judgement.objects.filter(user=userid, query=self.id) if judgement.relevance != -1]
 
 	def judgements(self):
-		return Judgement.objects.filter(query=self.id)
+		return self._judgements
+
+	def judgement_templates(self):
+		return JudgementTemplate.objects.filter(query=self.id)
 
 class JudgementTemplate(models.Model):
 	query = models.ForeignKey(Query)

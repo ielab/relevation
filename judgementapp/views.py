@@ -41,6 +41,8 @@ def qrels(request):
 @login_required
 def query_list(request):
     queries = Query.objects.order_by('qId')
+    for query in queries:
+        query.prepare_judgements(request.user.id)
 
     return render_to_response('judgementapp/query_list.html', { 'queries': queries}, context_instance=RequestContext(request))
 
