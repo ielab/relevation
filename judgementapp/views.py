@@ -31,7 +31,7 @@ def qrels(request):
     judgements = Judgement.objects.exclude(relevance=-1)
 
 
-    response = HttpResponse(judgements, mimetype='application/force-download')
+    response = HttpResponse(judgements, content_type='application/force-download')
     response['Content-Disposition'] = 'attachment; filename=qrels.txt'
     #response['X-Sendfile'] = myfile
     # It's usually a good idea to set the 'Content-Length' header too.
@@ -109,31 +109,30 @@ def document(request, qId, docId):
 def judge(request, qId, docId):
     query = get_object_or_404(Query, qId=qId)
     document = get_object_or_404(Document, docId=docId)
+    user = request.user
     relevance = request.POST['relevance']
     comment = request.POST['comment']
 
-    judgements = Judgement.objects.filter(query=query.id)
-    judgement, created = Judgement.objects.get_or_create(query=query.id, document=document.id)
+    judgements = Judgement.objects.filter(user=user.id, query=query.id)
+    judgement, created = Judgement.objects.get_or_create(user=user.id, query=query.id, document=document.id)
     judgement.relevance = int(relevance)
     if comment != 'Comment':
         judgement.comment = comment
     judgement.save()
 
-
-
     next = None
     try:
-        next = Judgement.objects.filter(query=query.id).get(id=judgement.id+1)
+        next = Judgement.objects.filter(user=user.id, query=query.id).get(id=judgement.id+1)
         if 'next' in request.POST:
             document = next.document
             judgement = next
-            next = Judgement.objects.filter(query=query.id).get(id=judgement.id+1)
+            next = Judgement.objects.filter(user=user.id, query=query.id).get(id=judgement.id+1)
     except:
         pass
 
     prev = None
     try:
-        prev = Judgement.objects.filter(query=query.id).get(id=judgement.id-1)
+        prev = Judgement.objects.filter(user=user.id, query=query.id).get(id=judgement.id-1)
     except:
         pass
 
@@ -142,7 +141,6 @@ def judge(request, qId, docId):
         if j.id == judgement.id:
             rank = count+1
             break
-
 
     content = document.get_content()
 
