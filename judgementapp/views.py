@@ -64,10 +64,19 @@ def query(request, qId):
 
     judgements = Judgement.objects.filter(user=user.id, query=query.id)
 
+    update = False
     if "difficulty" in request.POST:
         query.difficulty = int(request.POST['difficulty'])
         if "comment" in request.POST:
             query.comment = request.POST['comment']
+        update = True
+    if 'description' in request.POST:
+        query.description = request.POST['description']
+        update = True
+    if 'criteria' in request.POST:
+        query.criteria = request.POST['criteria']
+        update = True
+    if update:
         query.save()
 
     query.length = len(query.text)

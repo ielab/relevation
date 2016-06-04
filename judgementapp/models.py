@@ -24,9 +24,9 @@ class Query(models.Model):
 	text = models.CharField(max_length=250)
 	difficulty = models.IntegerField(blank=True, null=True)
 	comment = models.TextField(blank=True, null=True)
-
-	instructions = models.TextField(blank=True, null=True)
+	description = models.TextField(blank=True, null=True)
 	criteria = models.TextField(blank=True, null=True)
+
 	example = models.TextField(blank=True, null=True)
 
 	def __unicode__(self):
