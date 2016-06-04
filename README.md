@@ -12,7 +12,8 @@ Relevation is aimed at anyone wishing to collection relevance assessment for inf
 
 ## Feautures
 
-Relevation! is build using Python's Django web framework and Twitter's Bootstrap.
+* Authentication: support signup and login
+* Query management: admin can configure the number of judges needed for each query, users can claim the query they want to judge
 
 ## Setup Steps
 
@@ -33,4 +34,4 @@ Relevation has been used in anger for:
 
 ## Authors and Support
 
-Relevation was designed by [Bevan Koopman](http://koopman.id.au) and [Guido Zuccon](http://zuccon.net). Relevation is an open source project still in development.
+Relevation was designed by [Bevan Koopman](http://koopman.id.au) and [Guido Zuccon](http://zuccon.net). This version is updated by [Kyle Gao](http://www.cs.cmu.edu/~yingkaig/). Relevation is an open source project still in development.
