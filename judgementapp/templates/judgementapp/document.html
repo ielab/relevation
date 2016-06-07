@@ -74,8 +74,8 @@
                   Relevant documents should contain information allowing the user to understand that they have <em>{{ query.diseases }}</em>.
                 {% endif %}
 
-                <legend>Judgement</legend>
-                <div class="control-group">
+                <legend class="small-bottom-margin">Judgement</legend>
+                <div class="control-group" style="margin-top:0px">
                     <label class="radio">
                       <input type="radio" name="relevance" id="relevance1" value="-1" {% if judgement.relevance == -1 %} checked {% endif %}>
                       Unjudged
@@ -93,32 +93,57 @@
                       Not relevant
                     </label>
                 </div>
-                <legend>Readability</legend>
+                <legend class="small-bottom-margin">Understandability</legend>
                 Do you think a patient would understand this document?
-                <div class="control-group">
+                <div class="control-group" id="small_margin">
                   <label class="radio">
-                      <input type="radio" name="readability" id="readability" value="-1" {% if judgement.readability == -1 %} checked {% endif %}>
+                      <input type="radio" name="understandability" id="understandabilityUN" value="-1" {% if judgement.readability == -1 %} checked {% endif %}>
                       Unjudged.
                     </label><br>
                     <label class="radio">
-                      <input type="radio" name="readability" id="readability1" value="0" {% if judgement.readability == 0 %} checked {% endif %}>
-                      It is very technical and difficult to read and understand.
+                      <input type="radio" name="understandability" id="understandability0" value="0" {% if judgement.understandability == 0 %} checked {% endif %}>
+                      It is very hard to understand.
                     </label><br>
                     <label class="radio">
-                     <input type="radio" name="readability" id="readability2" value="1" {% if judgement.readability == 1 %} checked {% endif %}>
-                      It is somewhat technical and difficult to read and understand.
+                     <input type="radio" name="understandability" id="understandability1" value="1" {% if judgement.understandability == 1 %} checked {% endif %}>
+                      It is not easy hard, but not simple.
                     </label><br>
                     <label class="radio">
-                      <input type="radio" name="readability" id="readability1" value="2" {% if judgement.readability == 2 %} checked {% endif %}>
+                      <input type="radio" name="understandability" id="understandability2" value="2" {% if judgement.understandability == 2 %} checked {% endif %}>
+                      It is easy to understand.
+                    </label>
+                    <label class="radio">
+                      <input type="radio" name="understandability" id="understandabilityDN" value="-2" {% if judgement.understandability == -2 %} checked {% endif %}>
+                      I cannot decide!
+                    </label>
+
+                </div>
+                <legend class="small-bottom-margin">Reliability</legend>
+                Do you trust on this document?
+                <div class="control-group" id="small_margin">
+                  <label class="radio">
+                      <input type="radio" name="reliability" id="reliabilityUN" value="-1" {% if judgement.reliability == -1 %} checked {% endif %}>
+                      Unjudged.
+                    </label><br>
+                    <label class="radio">
+                      <input type="radio" name="reliability" id="reliability0" value="0" {% if judgement.reliability == 0 %} checked {% endif %}>
+                      I found some wrong or suspicious information on this page.
+                    </label><br>
+                    <label class="radio">
+                     <input type="radio" name="reliability" id="reliability1" value="1" {% if judgement.reliability == 1 %} checked {% endif %}>
+                      I don't   is somewhat technical and difficult to read and understand.
+                    </label><br>
+                    <label class="radio">
+                      <input type="radio" name="reliability" id="reliability2" value="2" {% if judgement.reliability == 2 %} checked {% endif %}>
                       It is somewhat easy to read and understand.
                     </label><br>
                     <label class="radio">
-                      <input type="radio" name="readability" id="readability0" value="3" {% if judgement.readability == 3 %} checked {% endif %}>
-                      It is very easy to read and understand.
+                      <input type="radio" name="reliability" id="reliabilityDN" value="3" {% if judgement.reliability == -2 %} checked {% endif %}>
+                      I cannot decide!
                     </label>
                 </div>
                 <legend>Comment (optional)</legend>
-                 <div class="control-group">
+                 <div class="control-group" id="small_margin">
                     
                     <div class="controls">
                       <textarea rows="10" class="span3", id="comment" name="comment">{% if judgement.comment %}{{ judgement.comment }}{% else %}{% endif %}</textarea>
