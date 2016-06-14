@@ -2,9 +2,23 @@
 
 {% block content %}
 
-    
-    
-
+    <style type="text/css">
+      .tooltip-inner {
+        background: white;
+        color: black;
+        max-width: 500px !important;
+      }
+      .scale_tips {
+        text-align: left;
+      }
+      .scale_tips table {
+        border-collapse: collapse;
+      }
+      .scale_tips table, th, td {
+        border: 1px solid black;
+        padding: 2px 10px 2px 10px;
+      }
+    </style>
 
 	   <div class="well">
 
@@ -74,23 +88,35 @@
                   Criteria: {{ query.criteria }}
                 {% endif %}
 
-                <legend>Judgement</legend>
+                <legend>Judgement <a href="#" id="judge_tips" data-toggle="tooltip" data-html="true" title="TIPS!"><small>[tips]</small></a></legend>
                 <div class="control-group">
                     <label class="radio">
                       <input type="radio" name="relevance" id="relevance1" value="-1" {% if judgement.relevance == -1 %} checked {% endif %}>
                       Unjudged
                     </label><br>
                     <label class="radio">
+                     <input type="radio" name="relevance" id="relevance5" value="5" {% if judgement.relevance == 5 %} checked {% endif %}>
+                      Navigational
+                    </label><br>
+                    <label class="radio">
+                     <input type="radio" name="relevance" id="relevance4" value="4" {% if judgement.relevance == 4 %} checked {% endif %}>
+                      Key Result
+                    </label><br>
+                    <label class="radio">
+                     <input type="radio" name="relevance" id="relevance3" value="3" {% if judgement.relevance == 3 %} checked {% endif %}>
+                      Highly Relevant
+                    </label><br>
+                    <label class="radio">
                      <input type="radio" name="relevance" id="relevance2" value="2" {% if judgement.relevance == 2 %} checked {% endif %}>
-                      Highly relevant
+                      Relevant
                     </label><br>
                     <label class="radio">
                       <input type="radio" name="relevance" id="relevance1" value="1" {% if judgement.relevance == 1 %} checked {% endif %}>
-                      Somewhat relevant
+                      Not Relevant
                     </label><br>
                     <label class="radio">
-                      <input type="radio" name="relevance" id="relevance0" value="0" {% if judgement.relevance == 0 %} checked {% endif %}>
-                      Not relevant
+                      <input type="radio" name="relevance" id="relevance1" value="-2" {% if judgement.relevance == -2 %} checked {% endif %}>
+                      Junk
                     </label>
                 </div>
                  <div class="control-group">
@@ -117,5 +143,13 @@
         
     </div>
 
-
+    <script>
+      $("#judge_tips").attr("title", 
+        "<table class='scale_tips'><tr><th>Navigational</th> <td>This page represents a home page of an entity directly named by the query; the user may be searching for this specific page or site.</td></tr><tr><th>Key Result</th> <td>This page or site is dedicated to the topic; authoritative and comprehensive, it is worthy of being a top result in a web search engine.</td></tr><tr><th>Highly Relevant</th><td>The content of this page provides substantial information on the topic.</td></tr><tr><th>Relevant</th><td>The content of this page provides some information on the topic, which may be minimal; the relevant information must be on that page, not just promising-looking anchor text pointing to a possibly useful page.</td></tr><tr><th>Not Relevant</th><td>The content of this page does not provide useful information on the topic, but may provide useful information on other topics, including other interpretations of the same query.</td></tr><tr><th>Junk</th><td>This page does not appear to be useful for any reasonable purpose; it may be spam or junk.</td></tr></table>"
+      );
+      $("#judge_tips").tooltip({
+        placement: "left", 
+        container: "body"
+      });
+    </script>
 {% endblock %}
