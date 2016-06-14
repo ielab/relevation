@@ -22,10 +22,11 @@ class Document(models.Model):
 class Query(models.Model):
 	qId = models.IntegerField()
 	text = models.CharField(max_length=250)
-	difficulty = models.IntegerField(blank=True, null=True)
-	comment = models.TextField(blank=True, null=True)
-	description = models.TextField(blank=True, null=True)
-	criteria = models.TextField(blank=True, null=True)
+	# confidence = models.IntegerField(blank=True, null=True)
+	# difficulty = models.IntegerField(blank=True, null=True)
+	# comment = models.TextField(blank=True, null=True)
+	# description = models.TextField(blank=True, null=True)
+	# criteria = models.TextField(blank=True, null=True)
 
 	example = models.TextField(blank=True, null=True)
 
@@ -47,6 +48,20 @@ class Query(models.Model):
 	def judgement_templates(self):
 		return JudgementTemplate.objects.filter(query=self.id)
 
+class QuerySurvey(models.Model):
+	query = models.ForeignKey(Query)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL)
+	
+	confidence = models.IntegerField(blank=True, null=True)
+	difficulty = models.IntegerField(blank=True, null=True)
+	comment = models.TextField(blank=True, null=True)
+	description = models.TextField(blank=True, null=True)
+	criteria = models.TextField(blank=True, null=True)
+
+	def __unicode__(self):
+		return '%s: %s' % (self.query.qId, self.user.username)
+
+
 class JudgementTemplate(models.Model):
 	query = models.ForeignKey(Query)
 	document = models.ForeignKey(Document)
@@ -56,7 +71,15 @@ class JudgementTemplate(models.Model):
 
 class Judgement(models.Model):
 
-	labels = {-1: 'Unjudged', 0: 'Not relvant', 1: 'Somewhat relevant', 2:'Highly relevant'}
+	labels = {
+		-2: "Junk", 
+		-1: 'Unjudged', 
+		0: 'Not relvant', 
+		1: 'Relevant', 
+		2: 'Highly relevant',
+		3: 'Key Result',
+		4: 'Navigational'
+	}
 
 	query = models.ForeignKey(Query)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL)

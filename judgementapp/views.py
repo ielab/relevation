@@ -63,25 +63,30 @@ def query(request, qId):
     user = request.user
 
     judgements = Judgement.objects.filter(user=user.id, query=query.id)
+    survey, created = QuerySurvey.objects.get_or_create(user=user, query=query)
 
     update = False
     if "difficulty" in request.POST:
-        query.difficulty = int(request.POST['difficulty'])
-        if "comment" in request.POST:
-            query.comment = request.POST['comment']
+        survey.difficulty = int(request.POST['difficulty'])
+        update = True
+    if "confidence" in request.POST:
+        survey.confidence = int(request.POST['confidence'])
+        update = True
+    if "comment" in request.POST:
+        survey.comment = request.POST['comment']
         update = True
     if 'description' in request.POST:
-        query.description = request.POST['description']
+        survey.description = request.POST['description']
         update = True
     if 'criteria' in request.POST:
-        query.criteria = request.POST['criteria']
+        survey.criteria = request.POST['criteria']
         update = True
     if update:
-        query.save()
+        survey.save()
 
     query.length = len(query.text)
 
-    return render_to_response('judgementapp/query.html', {'query': query, 'judgements': judgements},
+    return render_to_response('judgementapp/query.html', {'query': query, 'judgements': judgements, 'survey': survey},
         context_instance=RequestContext(request))
 
 @login_required
