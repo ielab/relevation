@@ -18,6 +18,13 @@
         border: 1px solid black;
         padding: 2px 10px 2px 10px;
       }
+      pre {
+        white-space: pre-wrap;       /* Since CSS 2.1 */
+        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+        white-space: -pre-wrap;      /* Opera 4-6 */
+        white-space: -o-pre-wrap;    /* Opera 7 */
+        word-wrap: break-word;       /* Internet Explorer 5.5+ */
+      }
     </style>
 
 	   <div class="well">
@@ -35,7 +42,7 @@
       {% endif %}
       </div>
 
-      <div class="col-md-6"><h3 style="text-align: center;">Document "{{ document.docId }}" ({{ rank }} / {{total_rank}}) </h3></div>
+      <div class="col-md-6"><h4 style="text-align: center;">Document "{{ document.docId }}" ({{ rank }} / {{total_rank}}) <a href="{{ cached }}"><h6>[Cached version]</h6></a></h4></div>
 
       <div class="col-md3" align="right">
       {% if next %}
@@ -48,7 +55,9 @@
 
 	<div class="row">
         
-        <div class="col-md-9", style="height:750px; position:relative; overflow-y: scroll;" id='content'>
+        <div class="col-md-9", style="height:750px; position:relative; overflow-x: normal; overflow-y: scroll;" id='content'>
+          <h4>The following box shows the terms in the Web page:</h4>
+          <br>
           <pre>{{ content }}</pre>
         </div>
       

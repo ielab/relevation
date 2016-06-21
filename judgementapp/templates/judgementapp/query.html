@@ -9,7 +9,7 @@
       {% csrf_token %}
       <div class="container-fluid">
         <div class="row">
-          <label>Intent Description: Please type in your information need in detail.</label>
+          <label>Intent Description: PPlease describe your information need in detail.</label>
           <div class="control-group">
               <div class="controls">
                 <textarea rows="3" placehoder="description" name="description" class="col-md-6" >{% if survey.description %}{{ survey.description }}{% else %}{% endif %}</textarea>
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="row">
-          <label>Relevance Criteria: Please specify what criteria should be met for a document to be relevant or irrelevant.</label>
+          <label>Relevance Criteria: Please describe the relevancy criteria of your information need.  Specifically, what requirements should a result (table) satisfy/fail to be relevant/irrelevant.</label>
           <div class="control-group">
               <div class="controls">
                 <textarea rows="3" placehoder="criteria" name="criteria" class="col-md-6" >{% if survey.criteria %}{{ survey.criteria }}{% else %}{% endif %}</textarea>

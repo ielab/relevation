@@ -134,9 +134,10 @@ def document(request, qId, docId):
         pass
 
     content = document.get_content()
+    cached = document.get_cashed_url()
 
     return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement,
-        'next': next, 'prev': prev, 'rank': rank, 'total_rank': judgements.count(), 'content': content.strip()}, context_instance=RequestContext(request))
+        'next': next, 'prev': prev, 'rank': rank, 'total_rank': judgements.count(), 'content': content.strip(), 'cached': cached}, context_instance=RequestContext(request))
 
 @login_required
 def judge(request, qId, docId):

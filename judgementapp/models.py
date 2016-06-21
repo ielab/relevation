@@ -19,6 +19,9 @@ class Document(models.Model):
 	def get_content(self):
 		return Document.loader_inst.get_content(self.docId)
 
+	def get_cashed_url(self):
+		return Document.loader_inst.get_cashed_url(self.docId)
+
 class Query(models.Model):
 	qId = models.IntegerField()
 	text = models.CharField(max_length=250)
