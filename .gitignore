@@ -4,6 +4,9 @@
 local_settings.py
 prefix.sh
 publish.sh
-relevation.db
+
+db/relevation.db
 
 demovideo/relevation_demo.mov
+dummyexamples/
+

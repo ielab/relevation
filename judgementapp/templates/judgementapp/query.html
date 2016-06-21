@@ -3,12 +3,41 @@
 {% block content %}
 
 	<div class="well">
-        <h2> <span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.text }}</span> <a style="text-align: right;", href="{% url 'judgementapp.views.query_list' %}" class="btn">Back to Queries</a></h2>
-	    <p></p>
-    </div>
+    <h2> <span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.text }}</span> <a style="text-align: right;", href="{% url 'judgementapp.views.query_list' %}" class="btn">Back to Queries</a></h2>
+
+    <form class="form-inline" action="" method="post">
+      {% csrf_token %}
+      <div class="container-fluid">
+        <div class="row">
+          <label>Intent Description: PPlease describe your information need in detail.</label>
+          <div class="control-group">
+              <div class="controls">
+                <textarea rows="3" placehoder="description" name="description" class="col-md-6" >{% if survey.description %}{{ survey.description }}{% else %}{% endif %}</textarea>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <label>Relevance Criteria: Please describe the relevancy criteria of your information need.  Specifically, what requirements should a result (table) satisfy/fail to be relevant/irrelevant.</label>
+          <div class="control-group">
+              <div class="controls">
+                <textarea rows="3" placehoder="criteria" name="criteria" class="col-md-6" >{% if survey.criteria %}{{ survey.criteria }}{% else %}{% endif %}</textarea>
+              </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 5px;">
+          <div class="form-actions">
+              <button type="submit" class="btn btn-primary" size="20">Save</button> <a href="{% url 'judgementapp.views.query' qId=query.qId %}" class="btn">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 
 	<div class="row">
-
+        {% if not judgements %}
+        <p>You have not claimed this query.
+        {% else %}
+        <legend style="color: #b30000">REMINDER: Results are in random order!</legend>
         <div class="span12">
         	<table class="table table-striped">
               <thead>
@@ -40,35 +69,57 @@
 
            <form class="form-inline" action="" method="post">
               {% csrf_token %}
-              <legend>How hard was this query to judge?</legend>
-              <div class="control-group">
-                 <label class="radio inline">
-                    <input type="radio" name="difficulty" id="difficulty2" value="2" {% if query.difficulty == 2 %} checked {% endif %}>
-                    Very difficult
-                  </label>
-                  <label class="radio inline">
-                    <input type="radio" name="difficulty" id="difficulty1" value="1" {% if query.difficulty == 1 %} checked {% endif %}>
-                    Moderately difficult
-                  </label>
-                  <label class="radio inline">
-                    <input type="radio" name="difficulty" id="difficulty0" value="0" {% if query.difficulty == 0 %} checked {% endif %}>
-                    Easy
-                  </label>
-              </div>
-              <label>Comments:</comments>
-               <div class="control-group">
-                  <div class="controls">
-                    <textarea rows="3" placehoder="comment" name="comment" class="span6" >{% if query.comment %}{{ query.comment }}{% else %}{% endif %}</textarea>
+              <div class=container-fluid>
+                <div class="row">
+                  <legend style="margin-bottom: 2px"><h5>How hard was this query to judge?</h5></legend>
+                  <div class="control-group">
+                     <label class="radio inline">
+                        <input type="radio" name="difficulty" id="difficulty2" value="2" {% if survey.difficulty == 2 %} checked {% endif %}>
+                        Very difficult
+                      </label>
+                      <label class="radio inline" style="margin-left: 10px;">
+                        <input type="radio" name="difficulty" id="difficulty1" value="1" {% if survey.difficulty == 1 %} checked {% endif %}>
+                        Moderately difficult
+                      </label>
+                      <label class="radio inline" style="margin-left: 10px;">
+                        <input type="radio" name="difficulty" id="difficulty0" value="0" {% if survey.difficulty == 0 %} checked {% endif %}>
+                        Easy
+                      </label>
                   </div>
                 </div>
-              
-
-              <div class="form-actions">
-                  <button type="submit" class="btn btn-primary" size="20">Save</button> <a href="{% url 'judgementapp.views.query' qId=query.qId %}" class="btn">Cancel</a>
+                <div class="row">
+                  <legend style="margin-bottom: 2px"><h5>How confident are you about your judgements?</h5></legend>
+                  <div class="control-group">
+                     <label class="radio inline">
+                        <input type="radio" name="confidence" id="confidence2" value="2" {% if survey.confidence == 2 %} checked {% endif %}>
+                        Very confident 
+                      </label>
+                      <label class="radio inline" style="margin-left: 10px;">
+                        <input type="radio" name="confidence" id="confidence1" value="1" {% if survey.confidence == 1 %} checked {% endif %}>
+                        Moderately confident
+                      </label>
+                      <label class="radio inline" style="margin-left: 10px;">
+                        <input type="radio" name="confidence" id="confidence0" value="0" {% if survey.confidence == 0 %} checked {% endif %}>
+                        Not confident
+                      </label>
+                  </div>
+                </div>
+                <div class="row">
+                <label>Comments:</label>
+                 <div class="control-group">
+                    <div class="controls">
+                      <textarea rows="3" placehoder="comment" name="comment" class="col-md-6" >{% if survey.comment %}{{ survey.comment }}{% else %}{% endif %}</textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 5px;">
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" size="20">Save</button> <a href="{% url 'judgementapp.views.query' qId=query.qId %}" class="btn">Cancel</a>
+                </div>
+                </div>
               </div>
-
             </form>
-
+        {% endif %}
         
     </div>
 

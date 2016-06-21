@@ -2,9 +2,30 @@
 
 {% block content %}
 
-    
-    
-
+    <style type="text/css">
+      .tooltip-inner {
+        background: white;
+        color: black;
+        max-width: 500px !important;
+      }
+      .scale_tips {
+        text-align: left;
+      }
+      .scale_tips table {
+        border-collapse: collapse;
+      }
+      .scale_tips table, th, td {
+        border: 1px solid black;
+        padding: 2px 10px 2px 10px;
+      }
+      pre {
+        white-space: pre-wrap;       /* Since CSS 2.1 */
+        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+        white-space: -pre-wrap;      /* Opera 4-6 */
+        white-space: -o-pre-wrap;    /* Opera 7 */
+        word-wrap: break-word;       /* Internet Explorer 5.5+ */
+      }
+    </style>
 
 	   <div class="well">
 
@@ -15,15 +36,15 @@
 
     <div class="row">
       
-      <div class="span3">
+      <div class="col-md-3">
       {% if prev %}
         <a href="{% url 'judgementapp.views.document' qId=query.qId docId=prev.document.docId %}" class="btn">Prev Document</a>
       {% endif %}
       </div>
 
-      <div class="span6"><h3 style="text-align: center;">Document "{{ document.docId }}" ({{ rank }} / {{total_rank}}) </h3></div>
+      <div class="col-md-6"><h4 style="text-align: center;">Document "{{ document.docId }}" ({{ rank }} / {{total_rank}}) <a href="{{ cached }}"><h6>[Cached version]</h6></a></h4></div>
 
-      <div class="span3" align="right">
+      <div class="col-md3" align="right">
       {% if next %}
         <a href="{% url 'judgementapp.views.document' qId=query.qId docId=next.document.docId %}" class="btn">Next Document</a>
       {% endif %}
@@ -34,7 +55,9 @@
 
 	<div class="row">
         
-        <div class="span9", style="height:750px; position:relative; overflow-y: scroll;" id='content'>
+        <div class="col-md-9", style="height:750px; position:relative; overflow-x: normal; overflow-y: scroll;" id='content'>
+          <h4>The following box shows the terms in the Web page:</h4>
+          <br>
           <pre>{{ content }}</pre>
         </div>
       
@@ -65,7 +88,7 @@
           }
     </script>
 
-        <div class="span3">
+        <div class="col-md-3">
             <form class="form-inline" action="{% url 'judgementapp.views.judge' qId=query.qId docId=document.docId %}" method="post">
                 {% csrf_token %}
 
@@ -74,29 +97,41 @@
                   Criteria: {{ query.criteria }}
                 {% endif %}
 
-                <legend>Judgement</legend>
+                <legend>Judgement <a href="#" id="judge_tips" data-toggle="tooltip" data-html="true" title="TIPS!"><small>[tips]</small></a></legend>
                 <div class="control-group">
                     <label class="radio">
                       <input type="radio" name="relevance" id="relevance1" value="-1" {% if judgement.relevance == -1 %} checked {% endif %}>
                       Unjudged
                     </label><br>
                     <label class="radio">
+                     <input type="radio" name="relevance" id="relevance5" value="5" {% if judgement.relevance == 5 %} checked {% endif %}>
+                      Navigational
+                    </label><br>
+                    <label class="radio">
+                     <input type="radio" name="relevance" id="relevance4" value="4" {% if judgement.relevance == 4 %} checked {% endif %}>
+                      Key Result
+                    </label><br>
+                    <label class="radio">
+                     <input type="radio" name="relevance" id="relevance3" value="3" {% if judgement.relevance == 3 %} checked {% endif %}>
+                      Highly Relevant
+                    </label><br>
+                    <label class="radio">
                      <input type="radio" name="relevance" id="relevance2" value="2" {% if judgement.relevance == 2 %} checked {% endif %}>
-                      Highly relevant
+                      Relevant
                     </label><br>
                     <label class="radio">
                       <input type="radio" name="relevance" id="relevance1" value="1" {% if judgement.relevance == 1 %} checked {% endif %}>
-                      Somewhat relevant
+                      Not Relevant
                     </label><br>
                     <label class="radio">
-                      <input type="radio" name="relevance" id="relevance0" value="0" {% if judgement.relevance == 0 %} checked {% endif %}>
-                      Not relevant
+                      <input type="radio" name="relevance" id="relevance1" value="-2" {% if judgement.relevance == -2 %} checked {% endif %}>
+                      Junk
                     </label>
                 </div>
                  <div class="control-group">
                     <label>Comment:</label>
                     <div class="controls">
-                      <textarea rows="10" class="span3", id="comment" name="comment">{% if judgement.comment %}{{ judgement.comment }}{% else %}{% endif %}</textarea>
+                      <textarea rows="10" class="col-md-12", id="comment" name="comment">{% if judgement.comment %}{{ judgement.comment }}{% else %}{% endif %}</textarea>
                       <button type="button" class="btn btn-link" id="capture" onclick="captureSelection()">Insert Selected Text</button>
                     </div>
                   </div>
@@ -117,5 +152,13 @@
         
     </div>
 
-
+    <script>
+      $("#judge_tips").attr("title", 
+        "<table class='scale_tips'><tr><th>Navigational</th> <td>This page represents a home page of an entity directly named by the query; the user may be searching for this specific page or site.</td></tr><tr><th>Key Result</th> <td>This page or site is dedicated to the topic; authoritative and comprehensive, it is worthy of being a top result in a web search engine.</td></tr><tr><th>Highly Relevant</th><td>The content of this page provides substantial information on the topic.</td></tr><tr><th>Relevant</th><td>The content of this page provides some information on the topic, which may be minimal; the relevant information must be on that page, not just promising-looking anchor text pointing to a possibly useful page.</td></tr><tr><th>Not Relevant</th><td>The content of this page does not provide useful information on the topic, but may provide useful information on other topics, including other interpretations of the same query.</td></tr><tr><th>Junk</th><td>This page does not appear to be useful for any reasonable purpose; it may be spam or junk.</td></tr></table>"
+      );
+      $("#judge_tips").tooltip({
+        placement: "left", 
+        container: "body"
+      });
+    </script>
 {% endblock %}

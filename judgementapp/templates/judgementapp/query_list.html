@@ -7,10 +7,10 @@
 	    <p></p>
     </div>
 
-	<div class="row">
+  <div class="row">
 
         <div class="span12">
-        	<table class="table table-striped">
+          <table class="table table-striped">
               <thead>
                 <tr>
                   <th>QueryId</th>
@@ -21,7 +21,7 @@
               </thead>
               <tbody>
 
-                {% for query in queries %}
+                {% for query in claimed_queries %}
                   
                 <tr>
                     <td>{{ query.qId }} </td>
@@ -35,7 +35,39 @@
               </tbody>
             </table>
 
-            {% if queries %}
+        </div>
+        
+    </div>  
+
+	<div class="row">
+
+        <div class="span12">
+        	<table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>QueryId</th>
+                  <th>Text</th>
+                  <th>Number of documents</th>
+                  <th>Claim a query</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for query in queries %}
+                  
+                <tr>
+                    <td>{{ query.qId }} </td>
+                    <td>{{ query.text }}</td>
+                    <td>{{ query.num_judgements }}</td>
+                    <td><a href="{% url 'judgementapp.views.claim' qId=query.qId %}">claim</a></td>
+                  </tr>
+                {% endfor %}
+                
+        
+              </tbody>
+            </table>
+
+            {% if user.is_staff and queries %}
               <a href="{% url 'judgementapp.views.qrels' %}" class="btn"><i class="icon-download"></i> Download Relevance Assessments (qrels)</a>
             {% endif %}
         </div>
