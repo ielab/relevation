@@ -5,10 +5,11 @@
     <div class="well">
         <h1>Relevation!</h1>
         <p>Relevation is a system for creating relevance judgement for Information Retrieval evaluations.</p>
+        <p><a class="btn btn-primary" href="https://github.com/bevankoopman/">Check it out on GitHub &raquo;</a></p>
     </div>
 
     <div class="row">
-        {% if user.is_staff %}
+        
         <div class="span6">
             <h2>Setup</h2>
 
@@ -16,7 +17,6 @@
 
             <p><a class="btn" href="{% url 'judgementapp.views.index' %}upload">Start setup &raquo;</a></p>
         </div>
-        {% endif %}
         <div class="span6">
             <h2>Queries</h2>
 
