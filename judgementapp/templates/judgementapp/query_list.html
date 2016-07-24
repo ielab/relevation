@@ -14,7 +14,7 @@
               <thead>
                 <tr>
                   <th>QueryId</th>
-                  <th>Text</th>
+                  <th>QueryCode</th>
                   <th>Number of documents</th>
                   <th>Number unjudged</th>
                 </tr>
@@ -25,7 +25,7 @@
                   
                 <tr>
                     <td>{{ query.qId }} </td>
-                    <td><a href="{% url 'judgementapp.views.query' qId=query.qId%}">{{ query.text }}</a></td>
+                    <td><a href="{% url 'judgementapp.views.query' qId=query.qId%}">{{ query.qcode }}</a></td>
                     <td>{{ query.num_judgements }}</td>
                     <td {% if query.num_unjudged_docs > 0 %} style="color: red" {% endif %}>{{ query.num_unjudged_docs }}</td>
                   </tr>

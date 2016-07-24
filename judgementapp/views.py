@@ -1,16 +1,19 @@
 # Create your views here.
 import cStringIO as StringIO
+#import re
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import Context, loader, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.servers.basehttp import FileWrapper
 
+from django.views.decorators.csrf import csrf_exempt
+
 from judgementapp.models import *
 
 def index(request):
     queries = Query.objects.order_by('qId')
-    output = ', '.join([q.text for q in queries])
+    output = ', '.join([q.criteria for q in queries])
 
     template = loader.get_template('judgementapp/index.html')
     context = Context({
@@ -44,9 +47,7 @@ def query(request, qId):
             query.comment = request.POST['comment']
         query.save()
 
-    query.length = len(query.text)
-
-    return render_to_response('judgementapp/query.html', {'query': query, 'judgements': judgements}, 
+    return render_to_response('judgementapp/query.html', {'query': query, 'judgements': judgements},
         context_instance=RequestContext(request))
 
 
@@ -62,7 +63,6 @@ def document(request, qId, docId):
             rank = count+1
             break
 
-
     prev = None
     try:
         prev = Judgement.objects.filter(query=query.id).get(id=judgement.id-1)
@@ -77,25 +77,57 @@ def document(request, qId, docId):
 
     content = document.get_content()
 
-    return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement, 
+    return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement,
         'next': next, 'prev': prev, 'rank': rank, 'total_rank': judgements.count(), 'content': content.strip()}, context_instance=RequestContext(request))
+
+@csrf_exempt
+def my_ajax(request, qId, docId):
+
+    if request.method == 'POST':
+        query = get_object_or_404(Query, qId=qId)
+        document = get_object_or_404(Document, docId=docId)
+
+        relevance = None
+        readability = None
+        trustability = None
+        comment = 'Comment'
+
+        if 'understandability' in request.POST:
+            readability = request.POST.get('understandability', None)
+        if 'trustability' in request.POST:
+            trustability = request.POST.get('trustability', None)
+
+        updateJudgement(query, document, relevance, readability, trustability, comment)
+        return HttpResponse('success') # if everything is OK
+
+    # nothing went well
+    return HttpRepsonse('FAIL!!!!!')
+
+
+def updateJudgement(query, document, relevance=None, readability=None, trustability=None, comment='Comment'):
+    judgement, created = Judgement.objects.get_or_create(query=query.id, document=document.id)
+
+    if relevance:
+        judgement.relevance = int(relevance)
+    if readability:
+        judgement.understandability = int(readability)
+    if trustability:
+        judgement.trustability = int(trustability)
+
+    if comment != 'Comment':
+        judgement.comment = comment
+    judgement.save()
+    return judgement
 
 def judge(request, qId, docId):
     query = get_object_or_404(Query, qId=qId)
     document = get_object_or_404(Document, docId=docId)
-    relevance = request.POST['relevance']
-    readability = request.POST['readability']
+
+    rel = request.POST['relevance']
     comment = request.POST['comment']
 
     judgements = Judgement.objects.filter(query=query.id)
-    judgement, created = Judgement.objects.get_or_create(query=query.id, document=document.id)
-    judgement.relevance = int(relevance)
-    judgement.readability = int(readability)
-    if comment != 'Comment':
-        judgement.comment = comment
-    judgement.save()
-
-    
+    judgement = updateJudgement(query, document, relevance=rel, comment=comment)
 
     next = None
     try:
@@ -119,10 +151,9 @@ def judge(request, qId, docId):
             rank = count+1
             break
 
-
     content = document.get_content()
 
-    return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement, 
+    return render_to_response('judgementapp/document.html', {'document': document, 'query': query, 'judgement': judgement,
         'next': next, 'prev': prev, 'rank': rank, 'total_rank': judgements.count(), 'content': content.strip()}, context_instance=RequestContext(request))
 
 
@@ -133,9 +164,11 @@ def upload(request):
 
         qryCount = 0
         for query in f:
-            qid, txt, diseas = query.split("\t", 2)
+            qid, qc, crit = query.split("\t", 2)
+
+            #qid, txt, diseas = re.split("\s+", query, maxsplit=2)
             qryCount = qryCount + 1
-            query = Query(qId=qid,text=txt,diseases=diseas)
+            query = Query(qId=qid,qcode=qc,criteria=crit)
             query.save()
         context['queries'] = qryCount
 
@@ -147,7 +180,7 @@ def upload(request):
             qid, z, doc, rank, score, desc = result.split()
             docCount = docCount + 1
             doc = doc.replace('corpus/', '')
-            
+
             document, created = Document.objects.get_or_create(docId=doc)
             document.text = "TBA"
 
@@ -159,16 +192,11 @@ def upload(request):
             judgement.document = document
             judgement.relevance = -1
             judgement.readability = -1
-            
+
             judgement.save()
-                
+
         context['results'] = docCount
 
     return render_to_response('judgementapp/upload.html', context)
-
-
-
-
-
 
 

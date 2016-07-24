@@ -1,9 +1,11 @@
 {% extends "judgementapp/base.html" %}
 
 {% block content %}
+{% load static %}
+{% static "" as baseUrl %}
 
 	<div class="well">
-        <h2> <span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.text }}</span> <a style="text-align: right;", href="{% url 'judgementapp.views.query_list' %}" class="btn">Back to Queries</a></h2>
+        <h6> <span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.criteria }} </span> <br>  <a style="text-align: right;", href="{% url 'judgementapp.views.query_list' %}" class="btn">Back to Queries</a></h6>
 	    <p></p>
     </div>
 
@@ -17,7 +19,8 @@
                   <th>Number</th>
                   <th>Document#</th>
                   <th>Relevance</th>
-                  <th>Readability</th>
+                  <th>Understandability</th>
+                  <th>Trustworthness</th>
                 </tr>
               </thead>
               <tbody>
@@ -31,14 +34,13 @@
                       {% if judgement.relevance == 0 %} red {% endif %}
                       {% if judgement.relevance == 1 %} orange {% endif %}
                       {% if judgement.relevance == 2 %} green {% endif %}
-                    " >{{ judgement.tlabel }}</td>
+                    " >{{ judgement.topical_label }}</td>
                     <td style="color: 
-                      {% if judgement.readability == -1 %} black {% endif %}
-                      {% if judgement.readability == 0 %} red {% endif %}
-                      {% if judgement.readability == 1 %} brown  {% endif %}
-                      {% if judgement.readability == 2 %} olive {% endif %}
-                      {% if judgement.readability == 3 %} green {% endif %}
-                    " >{{ judgement.rlabel }}</td>
+                    {% if judgement.understandability == -1 %} black {% else %} green {% endif %}
+                    " >{{ judgement.understandability_judged }}</td>
+                    <td style="color: 
+                    {% if judgement.trustability == -1 %} black {% else %} green {% endif %}
+                    " >{{ judgement.trustability_judged }}</td>
 
                   </tr>
                 {% endfor %}
