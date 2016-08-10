@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.db import models
+import codecs
+import re
 
 # Create your models here.
 
@@ -13,11 +15,21 @@ class Document(models.Model):
     def get_content(self):
         content = ""
         try:
+            encoding = "utf-8"
             with open(settings.DATA_DIR+"/"+self.docId) as f:
                 content = f.read()
+                regexp = re.search('charset=(?P<enc>[\w\d-]+)', content)
+                if regexp is not None:
+                    encoding = regexp.group("enc")
+            
+            with codecs.open(settings.DATA_DIR+"/"+self.docId, encoding=encoding) as f:
+                content = f.read()
+            
+            return content
+
         except Exception:
             content = "Could not read file %s" % settings.DATA_DIR+"/"+self.docId
-        return content
+            return content
 
 class Query(models.Model):
     qId = models.IntegerField()
