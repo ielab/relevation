@@ -15,17 +15,21 @@ class Document(models.Model):
     def get_content(self):
         content = ""
         try:
-            encoding = "utf-8"
+            encoding = "windows-1252"
             with open(settings.DATA_DIR+"/"+self.docId) as f:
                 content = f.read()
                 regexp = re.search('charset=(?P<enc>[\w\d-]+)', content)
                 if regexp is not None:
                     encoding = regexp.group("enc")
+            try: 
+            	with codecs.open(settings.DATA_DIR+"/"+self.docId, encoding=encoding) as f:
+                    content = f.read()
+	    	    return content
+	    except Exception:
+            	with open(settings.DATA_DIR+"/"+self.docId) as f:
+                    content = f.read()
+	    	    return content
             
-            with codecs.open(settings.DATA_DIR+"/"+self.docId, encoding=encoding) as f:
-                content = f.read()
-            
-            return content
 
         except Exception:
             content = "Could not read file %s" % settings.DATA_DIR+"/"+self.docId
