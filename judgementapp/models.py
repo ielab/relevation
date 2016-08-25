@@ -74,8 +74,8 @@ class Judgement(models.Model):
         return self.topic_labels[self.relevance]
 
     def understandability_judged(self):
-        return "Unjuged" if self.understandability == -1 else "Judged"
+        return "Unjudged" if self.understandability == -1 else "Judged"
 
     def trustability_judged(self):
-        return "Unjuged" if self.trustability == -1 else "Judged"
+        return "Unjudged" if self.trustability == -1 else "Judged"
 

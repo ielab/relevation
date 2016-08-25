@@ -4,7 +4,7 @@
 
 	   <div class="well">
 
-        <h6> <span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.criteria }} </span> <br>  <a style="text-align: right;", href="{% url 'judgementapp.views.query' qId=query.qId %}" class="btn">Back to Queries</a></h6>
+        <h6> <span {% if query.length > 200 %} class="long" {% endif %}>{{ query.qId }} - {{ query.criteria }} </span> <br>  <a style="text-align: right;", href="{% url 'judgementapp.views.query' qId=query.qId %}" class="btn">Back to Query</a></h6>
         
     </div>
 
