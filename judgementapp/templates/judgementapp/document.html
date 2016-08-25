@@ -28,7 +28,7 @@
 
 	<div class="row">
         
-        <div class="span9" style="height:750px; position:relative;"  id='content'>
+        <div class="span10" style="height:750px; position:relative;"  id='content'>
             <iframe frameborder="5" width="100%" height="100%" srcdoc='{{ content }}'></iframe> 
         </div>
       
@@ -69,7 +69,7 @@
 			});
 		}
 	</script> 
-        <div class="span3">
+        <div class="span2">
             <form class="form-inline" action="{% url 'judgementapp.views.judge' qId=query.qId docId=document.docId %}" method="post">
                 {% csrf_token %}
 
