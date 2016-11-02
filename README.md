@@ -8,7 +8,11 @@ Relevation is a system for performing relevance judgements for Information Retri
 
 ## Who is Relevation! aimed at?
 
-Relevation is aimed at anyone wishing to collection relevance assessment for information retrieval evaluation evaluation.
+Relevation! is aimed at anyone wishing to collection relevance assessment for information retrieval evaluation evaluation.
+
+If you do use Relevation! we would appreciated it if you cited us:
+
+B. Koopman and G. Zuccon. Relevation!: *An open source system for information retrieval relevance assessment*. In Proceedings of the 37th annual international ACM SIGIR conference on research and development in information retrieval, Gold Coast, Australia, July 2014.
 
 ## Feautures
 
@@ -30,6 +34,7 @@ Relevation has been used in anger for:
 * CLEF eHealth Evaluation Lab: 2013-2016
 * [ECIR diagnose me paper](http://zuccon.net/diagnose-this.html)
 * Relevance assessment collection for [Bevan Koopman's](http://koopman.id.au) PhD thesis
+* [SIGIR Clinical Trials Collection paper](http://dl.acm.org/citation.cfm?id=2914672)
 
 ## Authors and Support
 
