@@ -16,7 +16,7 @@ B. Koopman and G. Zuccon. Relevation!: *An open source system for information re
 
 ## Feautures
 
-Relevation! is build using Python's Django web framework and Twitter's Bootstrap.
+Relevation! is build using Python's (version 2.7) Django (version 1.6) web framework and Twitter's Bootstrap.
 
 ## Setup Steps
 
