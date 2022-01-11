@@ -54,7 +54,7 @@ class Judgement(models.Model):
 	relevance = models.IntegerField()
 
 	def __unicode__(self):
-		return '%s\t0%s\t%s\n' % (self.query.qId, self.document.docId, self.relevance)
+		return '%s Q0 %s %s\n' % (self.query.qId, self.document.docId, self.relevance)
 
 
 	def label(self):
