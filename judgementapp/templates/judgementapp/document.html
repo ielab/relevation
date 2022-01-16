@@ -66,15 +66,12 @@
 
           // Keyboard shortcuts for faster judging.
           document.addEventListener("DOMContentLoaded", function() {
-              let url = "{% url 'judgementapp.views.judge' qId=query.qId docId=document.docId %}";
               let btn = {% if next %} document.getElementById("btn-next") {% else %} document.getElementById("btn-save") {% endif %}
               let els = document.querySelectorAll("#relevance-labels > label > input");
-              console.log(els.length)
               document.onkeypress = function (e) {
                   e = e || window.event;
                   value = e.keyCode - 49
                   if (value >= 0 && value < els.length) {
-                      console.log(els[value])
                       els[value].checked = 1
                       btn.click();
                   }
