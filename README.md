@@ -27,6 +27,38 @@ Relevation! is build using Python's (version 2.7) Django (version 1.6) web frame
 
 You can also look at a demo that shows how to setup Relevation! from scratch; the demo is available at [https://vimeo.com/ielab/relevation](https://vimeo.com/ielab/relevation).
 
+### Input format for Queries and Rankings
+
+#### Queries File Format
+
+The query file has the format `queryId[tab]queryText`; e.g.,
+
+```
+20149	43-year-old woman with soft, flesh-colored, pedunculated lesions on her neck.
+201410	67-year-old woman status post cardiac catheterization via right femoral artery, now with a cool, pulseless right foot and right femoral bruit.
+201411	40-year-old woman with severe right arm pain and hypotension. She has no history of trauma and right arm exam reveals no significant findings.
+201412	25-year-old woman with fatigue, hair loss, weight gain, and cold intolerance for 6 months.
+201413	30-year-old woman who is 3 weeks post-partum, presents with shortness of breath, tachypnea, and hypoxia.
+```
+
+### Judgements File Format
+
+The judement file in just a standard TREC results file, which is:
+
+`queryId[tab]Q0[tab]docId[tab]score[tab]runDescription`
+
+For example:
+
+```
+201410	Q0	NCT02371057	1	0.82393600	bm25
+201410	Q0	NCT01102998	2	0.80546773	bm25
+201410	Q0	NCT00494468	3	0.78496643	bm25
+201410	Q0	NCT02517346	4	0.74522880	bm25
+201410	Q0	NCT00881985	5	0.61913227	bm25
+```
+
+The judgement file is in the form
+
 ## Use cases
 
 Relevation has been used in anger for:
