@@ -39,7 +39,7 @@
         </div>
       
         
-        <script>
+        <script type="text/javascript">
           // $('div#content').mouseup(function() {
           //     document.getElementById("comment").value = getSelectedText();
           // });
@@ -63,6 +63,23 @@
             }
             textarea.value = textarea.value + '"' + getSelectedText() + '"';
           }
+
+          // Keyboard shortcuts for faster judging.
+          document.addEventListener("DOMContentLoaded", function() {
+              let btn = {% if next %} document.getElementById("btn-next") {% else %} document.getElementById("btn-save") {% endif %}
+              let els = document.querySelectorAll("#relevance-labels > label > input");
+              document.onkeypress = function (e) {
+                  e = e || window.event;
+                  value = e.keyCode - 49
+                  if (value >= 0 && value < els.length) {
+                      els[value].checked = 1
+                      btn.click();
+                  }
+              };
+          });
+
+
+
     </script>
 
         <div class="span3">
@@ -75,7 +92,7 @@
                 {% endif %}
 
                 <legend>Judgement</legend>
-                <div class="control-group">
+                <div class="control-group" id="relevance-labels">
                     <label class="radio">
                       <input type="radio" name="relevance" id="relevance1" value="-1" {% if judgement.relevance == -1 %} checked {% endif %}>
                       Unjudged
@@ -104,7 +121,7 @@
 
                 <div class="form-actions">
 
-                    <button type="submit" class="btn btn-primary" size="20">Save</button> {% if next %} <button type="submit" name="next", class="btn btn-primary" size="20">Save & Next</button> {% endif %}
+                    <button id="btn-save" type="submit" class="btn btn-primary" size="20">Save</button> {% if next %} <button id="btn-next" type="submit" name="next" class="btn btn-primary" size="20">Save & Next</button> {% endif %}
                     
                 </div>
 
